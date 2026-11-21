@@ -1,0 +1,87 @@
+/* UsDigital-BMU Retail Banking Global Styles */
+
+:root {
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --morning-blue-primary: #2B629B;
+  --morning-blue-secondary: #3D7AB8;
+  --morning-blue-ink: #1C3D5A;
+  --brand-red: #E31B23;
+  --canvas-bg: #F2F6FB;
+  --surface-bg: #FFFFFF;
+  --text-main: #2A4158;
+  --status-success: #16865B;
+  --status-warning: #D99A20;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas-bg);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono, .tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.bank-surface {
+  background: #FFFFFF;
+  border: 1px solid #DCE6F2;
+  box-shadow: 0 1px 3px rgba(43, 98, 155, 0.06);
+}
+
+.bank-card-navy {
+  background-color: #2B629B;
+  background-image: linear-gradient(135deg, #2B629B 0%, #3D7AB8 100%);
+}
+
+.keypad-pattern {
+  background-color: #F2F6FB;
+  background-image: radial-gradient(rgba(43, 98, 155, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scale-in {
+    animation: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2F6FB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

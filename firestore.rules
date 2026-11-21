@@ -1,0 +1,138 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // GLOBAL SECURITY PRIMITIVES & ACCESS CONTROLS
+    // Pillar 1-8: Zero-Trust, Attribute-Based Access Control (ABAC)
+    // Core Mandate: Users can ONLY read and write their own data.
+    // No user can access, list, or tamper with another user's data.
+    // =========================================================================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Default Deny Catch-all for any unmapped paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // =========================================================================
+    // USERS ROOT COLLECTION: /users/{userId}
+    // =========================================================================
+    match /users/{userId} {
+      // Identity & Privacy Guard:
+      // A user can ONLY inspect their own personal profile/dossier.
+      // List operations are restricted to Admins to monitor clients; standard users cannot list other users.
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+
+      // Creation: User can only register their own profile document with matching UID.
+      allow create: if isOwner(userId) && isValidId(userId)
+                    && incoming().id == userId
+                    && incoming().keys().hasAll(['id', 'username', 'name', 'role', 'status'])
+                    && incoming().name is string && incoming().name.size() <= 100
+                    && incoming().username is string && incoming().username.size() <= 50;
+
+      // Update: User can only modify non-immutable fields on their own profile.
+      // Non-admins cannot alter system clearance roles or locks.
+      allow update: if isValidId(userId) && (
+        (isOwner(userId)
+          && incoming().id == existing().id
+          && incoming().role == existing().role
+          && incoming().status == existing().status
+          && incoming().diff(existing()).affectedKeys().hasOnly([
+            'name', 'email', 'idNumber', 'passportUrl', 'settings', 'updatedAt'
+          ]))
+        || isAdmin()
+      );
+
+      // Delete: Strictly restricted to Admin to prevent unauthorized profile destruction.
+      allow delete: if isValidId(userId) && isAdmin();
+
+      // =======================================================================
+      // SUBCOLLECTION: Transactions Ledger /users/{userId}/transactions/{txId}
+      // =======================================================================
+      match /transactions/{transactionId} {
+        // Users can ONLY query and inspect their own ledger entries.
+        allow get: if isValidId(userId) && isValidId(transactionId) && (isOwner(userId) || isAdmin());
+        allow list: if isValidId(userId) && (isOwner(userId) || isAdmin());
+
+        // Users can create their own debit/credit transactions for their own account.
+        allow create: if isOwner(userId) && isValidId(transactionId)
+                      && incoming().amount is number && incoming().amount > 0
+                      && incoming().type in ['DEBIT', 'CREDIT']
+                      && incoming().category is string;
+
+        // Ledger records are tamper-proof and immutable; deletion is forbidden.
+        allow update: if false;
+        allow delete: if false;
+      }
+
+      // =======================================================================
+      // SUBCOLLECTION: Loans & Credit Lines /users/{userId}/loans/{loanId}
+      // =======================================================================
+      match /loans/{loanId} {
+        allow get: if isValidId(userId) && isValidId(loanId) && (isOwner(userId) || isAdmin());
+        allow list: if isValidId(userId) && (isOwner(userId) || isAdmin());
+
+        // Users can submit loan applications for their own account.
+        allow create: if isOwner(userId) && isValidId(loanId)
+                      && incoming().userId == userId
+                      && incoming().amount is number && incoming().amount > 0
+                      && incoming().status == 'PENDING';
+
+        // Only authorized administrators can approve or reject loans.
+        allow update: if isValidId(userId) && isValidId(loanId) && isAdmin();
+        allow delete: if false;
+      }
+
+      // =======================================================================
+      // SUBCOLLECTION: Recurring Mandates /users/{userId}/recurring/{recurringId}
+      // =======================================================================
+      match /recurring/{recurringId} {
+        allow get, list: if isValidId(userId) && (isOwner(userId) || isAdmin());
+        allow create: if isOwner(userId) && isValidId(recurringId)
+                      && incoming().amount is number && incoming().amount > 0;
+        allow update: if isOwner(userId) && isValidId(recurringId);
+        allow delete: if isOwner(userId) && isValidId(recurringId);
+      }
+
+      // =======================================================================
+      // SUBCOLLECTION: User Privacy & Settings /users/{userId}/settings/{settingId}
+      // =======================================================================
+      match /settings/{settingId} {
+        allow read, write: if isOwner(userId) && isValidId(userId);
+      }
+    }
+
+    // =========================================================================
+    // ADMIN ACCESS COLLECTION: /admins/{adminId}
+    // =========================================================================
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Provisioned exclusively via secure backend
+    }
+  }
+}

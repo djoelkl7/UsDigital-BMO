@@ -1,0 +1,169 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Sovereign Banking client profile and KYC identity dossier",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique user identity identifier"
+        },
+        "username": {
+          "type": "string",
+          "description": "Unique username handle for authentication"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full legal name of the user"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["PERSONAL", "BUSINESS", "ADMIN"],
+          "description": "Clearance role tier"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "LOCKED"],
+          "description": "Operational clearance status"
+        },
+        "balance": {
+          "type": "number",
+          "description": "Liquid assets balance in USD"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Secure registry email"
+        },
+        "idNumber": {
+          "type": "string",
+          "description": "Official passport clearance document number"
+        },
+        "passportUrl": {
+          "type": "string",
+          "description": "High-resolution biometric passport photo or stylized avatar asset URL"
+        }
+      },
+      "required": ["id", "username", "name", "role", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial ledger debit/credit movement record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Transaction identifier"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["DEBIT", "CREDIT"],
+          "description": "Direction of funds"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Transfer amount in USD"
+        },
+        "category": {
+          "type": "string",
+          "description": "Spending or income category"
+        },
+        "description": {
+          "type": "string",
+          "description": "Ledger note or memo"
+        },
+        "date": {
+          "type": "string",
+          "description": "Transaction timestamp in ISO-8601 format"
+        },
+        "to": {
+          "type": "string",
+          "description": "Destination counterparty"
+        },
+        "from": {
+          "type": "string",
+          "description": "Originating counterparty"
+        }
+      },
+      "required": ["id", "type", "amount", "category", "date"]
+    },
+    "Loan": {
+      "title": "Loan",
+      "description": "Credit facility or private loan application",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Loan identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Borrower user UID"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Principal facility amount"
+        },
+        "term": {
+          "type": "number",
+          "description": "Repayment duration in months"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "APPROVED", "REJECTED"],
+          "description": "Underwriting review status"
+        },
+        "date": {
+          "type": "string",
+          "description": "Origination date"
+        }
+      },
+      "required": ["id", "userId", "amount", "term", "status", "date"]
+    },
+    "RecurringPayment": {
+      "title": "RecurringPayment",
+      "description": "Standing order or automated liquidity mandate",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Mandate identifier"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Periodic debit amount"
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["DAILY", "WEEKLY", "MONTHLY"],
+          "description": "Execution cadence"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "CANCELLED", "COMPLETED"],
+          "description": "Mandate status"
+        }
+      },
+      "required": ["id", "amount", "frequency", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private client profile and sovereign KYC dossier. Access restricted strictly to the authenticated document owner (user can only read/write their own data) and Admins for client monitoring."
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Tamper-proof personal transaction history ledger. Only readable and writable by the account owner."
+    },
+    "/users/{userId}/loans/{loanId}": {
+      "schema": "Loan",
+      "description": "Private credit lines and liquidity facility applications. Only readable by the applicant."
+    },
+    "/users/{userId}/recurring/{recurringId}": {
+      "schema": "RecurringPayment",
+      "description": "Scheduled payment mandates owned exclusively by the user."
+    }
+  }
+}
