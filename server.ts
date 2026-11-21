@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createServer as createViteServer } from 'vite';
 import { SERVER_INITIAL_USERS, CATHERINE_LOCK_NOTICE, CATHERINE_CREDENTIAL_HASH } from './serverData';
 import { User, UserRole, UserStatus, Transaction } from './types';
 
@@ -230,6 +229,11 @@ async function startServer() {
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     next();
+  });
+
+  // Health check endpoint for hosting/load-balancer monitoring
+  app.get('/api/health', (_req: Request, res: Response) => {
+    res.json({ ok: true, service: 'UsDigital-BMU', mode: process.env.NODE_ENV || 'development' });
   });
 
   // Check whether environment passcodes or first-run bootstrap credentials exist (boolean flags only)
@@ -487,8 +491,9 @@ async function startServer() {
     return res.json({ users: serverUsers.map(sanitizeUser) });
   });
 
-  // Vite Dev Middleware or Static Production Serving
+  // Vite Dev Middleware (dynamically imported so production has zero devDependency requirements)
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
@@ -502,14 +507,30 @@ async function startServer() {
     app.use('/src/assets/images', express.static(path.resolve(__dirname, 'src/assets/images')));
     const distDir = path.resolve(__dirname, 'dist');
     app.use(express.static(distDir));
-    app.use((_req, res) => {
-      res.sendFile(path.join(distDir, 'index.html'));
+    app.use('/api', (_req, res) => {
+      res.status(404).json({ error: 'API endpoint not found.' });
+    });
+    app.use(['/assets', '/src/assets'], (_req, res) => {
+      res.status(404).send('Asset not found.');
+    });
+    app.use((req, res) => {
+      if (req.method !== 'GET' && req.method !== 'HEAD') {
+        return res.status(405).json({ error: 'Method not allowed.' });
+      }
+      return res.sendFile(path.join(distDir, 'index.html'));
     });
   }
 
-  app.listen(PORT, HOST, () => {
-    console.log(`UsDigital-BMU server listening on http://${HOST}:${PORT}`);
-  });
+  const rawPort = process.env.PORT;
+  if (rawPort && !/^\d+$/.test(rawPort)) {
+    app.listen(rawPort, () => {
+      console.log(`UsDigital-BMU server listening on socket ${rawPort}`);
+    });
+  } else {
+    app.listen(PORT, HOST, () => {
+      console.log(`UsDigital-BMU server listening on http://${HOST}:${PORT}`);
+    });
+  }
 }
 
 startServer().catch(err => {

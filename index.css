@@ -1,4 +1,7 @@
 /* UsDigital-BMU Retail Banking Global Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;

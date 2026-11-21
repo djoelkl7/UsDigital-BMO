@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+deploy-package/
+*.zip
+bun.lock
 *.local
 
 # Environment variables and secrets
