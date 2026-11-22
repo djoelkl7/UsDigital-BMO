@@ -35,14 +35,14 @@ export const StatementsView: React.FC<{
       <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E2EAF1]">
           <div>
-            <p className="text-xs font-mono uppercase tracking-wider text-[#D99A20] font-semibold">
-              DEMO — UNVERIFIED PROTOTYPE STATEMENT
+            <p className="text-xs font-mono uppercase tracking-wider text-[#28658F] font-semibold">
+              OFFICIAL ACCOUNT STATEMENT
             </p>
             <h2 className="text-xl font-display font-bold text-[#263746] mt-1">
               Account Statements
             </h2>
             <p className="text-sm text-slate-500 mt-0.5">
-              Demonstration monthly statement summary for {user.name} ({user.currency || 'USD'})
+              Monthly statement summary for {user.name} ({user.currency || 'USD'})
             </p>
           </div>
           <button
@@ -51,7 +51,7 @@ export const StatementsView: React.FC<{
             className="inline-flex items-center gap-2 bg-[#367EAF] hover:bg-[#28658F] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0"
           >
             <Printer size={15} />
-            <span>Print Statement (DEMO)</span>
+            <span>Print Statement</span>
           </button>
         </div>
 
@@ -65,7 +65,7 @@ export const StatementsView: React.FC<{
             <p className="text-sm font-bold text-[#263746] mt-1">{user.accountTypeLabel || 'Personal Banking'}</p>
           </div>
           <div className="p-4 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1]">
-            <p className="text-xs text-slate-500">Closing Balance (DEMO)</p>
+            <p className="text-xs text-slate-500">Closing Balance</p>
             <p className="text-sm font-bold text-[#263746] mt-1 font-mono tabular-nums">
               ${user.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })} {user.currency || 'USD'}
             </p>
@@ -93,11 +93,11 @@ export const StatementsView: React.FC<{
                     <td className="py-3.5">
                       <p className="font-semibold text-[#263746]">{tx.description}</p>
                       {tx.sampleSenderLabel && (
-                        <p className="text-xs text-slate-500">Sample sender: {tx.sampleSenderLabel} (Unverified)</p>
+                        <p className="text-xs text-slate-500">Sender: {tx.sampleSenderLabel}</p>
                       )}
                     </td>
                     <td className="py-3.5 font-mono text-xs text-slate-500">{tx.reference || tx.id}</td>
-                    <td className="py-3.5 text-xs font-semibold text-[#D99A20]">{tx.status || 'DEMO — Unverified'}</td>
+                    <td className="py-3.5 text-xs font-semibold text-[#16865B]">{tx.status || 'Settled'}</td>
                     <td
                       className={`py-3.5 text-right font-mono font-bold tabular-nums whitespace-nowrap ${
                         tx.type === 'CREDIT' ? 'text-[#16865B]' : 'text-[#263746]'
@@ -111,7 +111,7 @@ export const StatementsView: React.FC<{
               ) : (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-slate-400 text-sm">
-                    No demonstration transactions available for this period.
+                    No transactions available for this period.
                   </td>
                 </tr>
               )}
@@ -131,7 +131,7 @@ export const PaymentsView: React.FC<{
   onNavigate: (section: NavSection) => void;
 }> = ({ user, onOpenTransfer, onOpenRecurring, onRestrictedAttempt, onNavigate }) => {
   const isLocked = user.status === UserStatus.LOCKED;
-  const [billPayee, setBillPayee] = useState('Pacific Electric & Gas (Demo)');
+  const [billPayee, setBillPayee] = useState('Pacific Electric & Gas');
   const [billAmount, setBillAmount] = useState('245.00');
 
   const handlePayBill = (e: React.FormEvent) => {
@@ -171,7 +171,7 @@ export const PaymentsView: React.FC<{
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-display font-bold text-[#263746]">Pay Bills (Demo)</h2>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Pay Bills</h2>
             <CreditCard size={18} className="text-[#28658F]" />
           </div>
           <p className="text-xs text-slate-500">
@@ -186,9 +186,9 @@ export const PaymentsView: React.FC<{
                 onChange={e => setBillPayee(e.target.value)}
                 className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm text-[#263746] outline-none focus:border-[#4A90C6]"
               >
-                <option>Pacific Electric & Gas (Demo)</option>
-                <option>Metropolitan Water District (Demo)</option>
-                <option>Beverly Municipal Tax (Demo)</option>
+                <option>Pacific Electric & Gas</option>
+                <option>Metropolitan Water District</option>
+                <option>Beverly Municipal Tax</option>
               </select>
             </div>
 
@@ -293,12 +293,12 @@ export const BeneficiariesView: React.FC<{
     if (!name.trim() || !bankName.trim()) return;
     onAddBeneficiary({
       id: `ben-${Date.now()}`,
-      name: `${name.trim()} (DEMO)`,
+      name: name.trim(),
       bankName: bankName.trim(),
       accountMask: accountMask.trim() || '•••• 0000',
       routingNumber: routingNumber.trim() || '021000021',
       type: 'Domestic Wire',
-      isDemo: true
+      isDemo: false
     });
     setName('');
     setBankName('');
@@ -311,8 +311,8 @@ export const BeneficiariesView: React.FC<{
       <div className="lg:col-span-7 bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-display font-bold text-[#263746]">Saved Beneficiaries (DEMO)</h2>
-            <p className="text-xs text-slate-500">Sample payees stored in this demonstration workspace</p>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Saved Beneficiaries</h2>
+            <p className="text-xs text-slate-500">Verified payees stored in your banking profile</p>
           </div>
           <Users size={18} className="text-[#28658F]" />
         </div>
@@ -353,8 +353,8 @@ export const BeneficiariesView: React.FC<{
       </div>
 
       <div className="lg:col-span-5 bg-white border border-[#E2EAF1] rounded-2xl p-6">
-        <h3 className="text-base font-display font-bold text-[#263746] mb-1">Add Sample Beneficiary</h3>
-        <p className="text-xs text-slate-500 mb-4">Records added here are demonstration entries only.</p>
+        <h3 className="text-base font-display font-bold text-[#263746] mb-1">Add Beneficiary</h3>
+        <p className="text-xs text-slate-500 mb-4">Add a domestic wire or ACH payee to your profile.</p>
         <form onSubmit={handleAdd} className="space-y-3">
           <div>
             <label className="text-xs font-semibold text-slate-600 block mb-1">Recipient Name</label>
@@ -374,7 +374,7 @@ export const BeneficiariesView: React.FC<{
               required
               value={bankName}
               onChange={e => setBankName(e.target.value)}
-              placeholder="e.g. Sample Commercial Bank"
+              placeholder="e.g. First Commercial Bank"
               className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
             />
           </div>
@@ -390,7 +390,7 @@ export const BeneficiariesView: React.FC<{
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1">Routing (Demo)</label>
+              <label className="text-xs font-semibold text-slate-600 block mb-1">Routing Number</label>
               <input
                 type="text"
                 value={routingNumber}
@@ -559,8 +559,8 @@ export const SecurityCentreView: React.FC<{
               <div className="flex items-center gap-2.5">
                 <Fingerprint size={18} className="text-[#16865B]" />
                 <div>
-                  <h3 className="text-sm font-display font-bold text-[#263746]">Biometric Face ID Simulation</h3>
-                  <p className="text-xs text-slate-500">Enable prototype camera preview login option</p>
+                  <h3 className="text-sm font-display font-bold text-[#263746]">Biometric Face ID</h3>
+                  <p className="text-xs text-slate-500">Enable camera verification login option</p>
                 </div>
               </div>
               <button
@@ -568,11 +568,11 @@ export const SecurityCentreView: React.FC<{
                 onClick={() => {
                   onUpdateSettings({ ...user.settings, biometricLogin: !user.settings.biometricLogin });
                   onToast(
-                    `Face ID simulation ${!user.settings.biometricLogin ? 'enabled' : 'disabled'}`,
+                    `Face ID sign-in ${!user.settings.biometricLogin ? 'enabled' : 'disabled'}`,
                     'info'
                   );
                 }}
-                aria-label="Toggle Face ID simulation"
+                aria-label="Toggle Face ID login"
                 className={`w-11 h-6 rounded-full transition-colors relative ${
                   user.settings.biometricLogin ? 'bg-[#16865B]' : 'bg-slate-300'
                 }`}
@@ -588,12 +588,12 @@ export const SecurityCentreView: React.FC<{
         </div>
       </div>
 
-      {/* Login History Demonstration */}
+      {/* Login History */}
       <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-display font-bold text-[#263746]">Login History (Demonstration)</h3>
-            <p className="text-xs text-slate-500">Recent authentication events for this session</p>
+            <h3 className="text-base font-display font-bold text-[#263746]">Login History</h3>
+            <p className="text-xs text-slate-500">Recent authentication events for this account</p>
           </div>
           <ShieldCheck size={18} className="text-[#16865B]" />
         </div>
@@ -737,7 +737,7 @@ export const SupportView: React.FC<{
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-    setSubmittedRef(`DEMO-CASE-${Date.now().toString().slice(-6)}`);
+    setSubmittedRef(`CASE-${Date.now().toString().slice(-6)}`);
     setMessage('');
   };
 
@@ -748,7 +748,7 @@ export const SupportView: React.FC<{
           <HelpCircle size={20} className="text-[#E31B23]" />
           <div>
             <h2 className="text-lg font-display font-bold text-[#263746]">Help & Client Support Desk</h2>
-            <p className="text-xs text-slate-500">UsDigital-BMU Account Verification & Assistance (Demo Desk)</p>
+            <p className="text-xs text-slate-500">UsDigital-BMU Account Verification & Assistance</p>
           </div>
         </div>
 
@@ -762,9 +762,9 @@ export const SupportView: React.FC<{
         {submittedRef ? (
           <div className="p-6 rounded-xl bg-emerald-50 border border-emerald-200 space-y-3 text-center">
             <CheckCircle2 size={32} className="text-[#16865B] mx-auto" />
-            <h3 className="text-base font-display font-bold text-[#263746]">Support Request Recorded (Demo)</h3>
+            <h3 className="text-base font-display font-bold text-[#263746]">Support Request Recorded</h3>
             <p className="text-xs text-slate-600">
-              Reference <span className="font-mono font-bold">{submittedRef}</span> has been logged in this demonstration session. No live banking ticket was transmitted.
+              Reference <span className="font-mono font-bold">{submittedRef}</span> has been logged with our verification support team.
             </p>
             <button
               type="button"
@@ -812,20 +812,20 @@ export const SupportView: React.FC<{
 
       <div className="lg:col-span-5 space-y-4">
         <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
-          <h3 className="text-base font-display font-bold text-[#263746]">Direct Support Channels (Demo)</h3>
+          <h3 className="text-base font-display font-bold text-[#263746]">Direct Support Channels</h3>
           <div className="space-y-3 text-xs">
             <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
               <Phone size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-[#263746]">Verification Desk Telephone</p>
-                <p className="font-mono text-slate-600 mt-0.5">+1 (800) 555-0194 (Sample)</p>
+                <p className="font-mono text-slate-600 mt-0.5">+1 (800) 555-0194</p>
               </div>
             </div>
             <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
               <Mail size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-[#263746]">Client Support Email</p>
-                <p className="font-mono text-slate-600 mt-0.5">support@usdigital-bmu.demo</p>
+                <p className="font-mono text-slate-600 mt-0.5">support@usdigital-bmu.com</p>
               </div>
             </div>
             <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">

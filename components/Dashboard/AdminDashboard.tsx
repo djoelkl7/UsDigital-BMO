@@ -182,7 +182,7 @@ export const AdminDashboard: React.FC<{
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-white border border-[#E2EAF1] p-5 rounded-2xl">
-              <p className="text-xs font-semibold text-slate-500 mb-1">Total Demo Balances</p>
+              <p className="text-xs font-semibold text-slate-500 mb-1">Total Account Balances</p>
               <p className="text-2xl font-display font-bold text-[#263746] font-mono tabular-nums">
                 ${totalFunds.toLocaleString(undefined, { maximumFractionDigits: 0 })}
               </p>
@@ -253,7 +253,7 @@ export const AdminDashboard: React.FC<{
                       </div>
 
                       <div className="flex items-center justify-between text-xs mb-3 px-0.5">
-                        <span className="text-slate-500">Demo Balance</span>
+                        <span className="text-slate-500">Balance</span>
                         <span className="font-bold text-[#263746] font-mono tabular-nums">
                           ${u.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                         </span>
@@ -334,7 +334,7 @@ export const AdminDashboard: React.FC<{
                   <thead>
                     <tr className="text-slate-500 text-xs uppercase border-b border-[#E2EAF1]">
                       <th className="pb-3 font-semibold">Account Holder</th>
-                      <th className="pb-3 font-semibold">Demo Balance</th>
+                      <th className="pb-3 font-semibold">Balance</th>
                       <th className="pb-3 font-semibold">Status</th>
                       <th className="pb-3 font-semibold text-right">Dossier</th>
                     </tr>
@@ -530,7 +530,7 @@ export const AdminDashboard: React.FC<{
 
                       <div className="space-y-1.5 text-xs mb-4">
                         <div className="flex justify-between">
-                          <span className="text-slate-500">Demo Balance</span>
+                          <span className="text-slate-500">Balance</span>
                           <span className="font-bold text-[#263746] font-mono tabular-nums">
                             ${u.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                           </span>
@@ -595,7 +595,7 @@ export const AdminDashboard: React.FC<{
             <div>
               <h3 className="text-lg font-display font-bold text-[#263746]">Account Registry</h3>
               <p className="text-slate-500 text-xs mt-0.5">
-                Enable Balance Override above to adjust demonstration balances inline.
+                Enable Balance Override above to adjust account balances inline.
               </p>
             </div>
             <button
@@ -617,7 +617,7 @@ export const AdminDashboard: React.FC<{
                 <tr className="text-slate-500 text-xs font-semibold uppercase border-b border-[#E2EAF1]">
                   <th className="pb-3">Account Holder</th>
                   <th className="pb-3">Type</th>
-                  <th className="pb-3 text-right">Demo Balance (USD)</th>
+                  <th className="pb-3 text-right">Balance (USD)</th>
                   <th className="pb-3 text-center">Status</th>
                   <th className="pb-3 text-right">Actions</th>
                 </tr>

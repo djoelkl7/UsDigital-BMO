@@ -178,7 +178,7 @@ export const PersonalDashboard: React.FC<{
           </div>
         </div>
         <p className="text-xs text-slate-600 leading-relaxed">
-          You may continue viewing your account information, demonstration balance, and transaction history while outgoing transfers, withdrawals, and bill payments remain disabled.
+          You may continue viewing your account information, balance, and transaction history while outgoing transfers, withdrawals, and bill payments remain disabled.
         </p>
         <div className="flex items-center gap-2.5">
           <button
@@ -213,7 +213,7 @@ export const PersonalDashboard: React.FC<{
               {compact ? 'Recent Transactions' : 'Transaction History'}
             </h3>
             <p className="text-xs text-slate-500">
-              Demonstration statement entries · Click any transaction to view full details
+              Account statement entries · Click any transaction to view full details
             </p>
           </div>
 
@@ -252,7 +252,7 @@ export const PersonalDashboard: React.FC<{
                 <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Search description, sender, category, or demo reference..."
+                  placeholder="Search description, sender, category, or reference..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   className="w-full bg-[#F3F7FB] border border-[#E2EAF1] rounded-xl pl-10 pr-4 py-2.5 text-xs text-[#263746] focus:bg-white focus:border-[#4A90C6] outline-none"
@@ -348,7 +348,7 @@ export const PersonalDashboard: React.FC<{
                           </p>
                           {tx.sampleSenderLabel && (
                             <p className="text-xs text-slate-500">
-                              Sample sender: {tx.sampleSenderLabel} (Unverified)
+                              Sender: {tx.sampleSenderLabel}
                             </p>
                           )}
                         </div>
@@ -360,8 +360,8 @@ export const PersonalDashboard: React.FC<{
                     <td className="py-3.5 font-mono text-xs text-slate-600 tabular-nums whitespace-nowrap">
                       {tx.displayDate || tx.date}
                     </td>
-                    <td className="py-3.5 text-xs font-semibold text-[#D99A20] whitespace-nowrap">
-                      {tx.status || 'DEMO — Unverified'}
+                    <td className="py-3.5 text-xs font-semibold text-[#16865B] whitespace-nowrap">
+                      {tx.status || 'Settled'}
                     </td>
                     <td className="py-3.5 font-mono text-xs text-slate-500 whitespace-nowrap">
                       {tx.reference || tx.id}
@@ -414,8 +414,8 @@ export const PersonalDashboard: React.FC<{
                     <p className="text-xs text-slate-500 mt-0.5">
                       {tx.category} · <span className="font-mono tabular-nums">{tx.displayDate || tx.date}</span>
                     </p>
-                    <p className="text-[11px] font-semibold text-[#D99A20] mt-0.5">
-                      {tx.status || 'DEMO — Unverified'}
+                    <p className="text-[11px] font-semibold text-[#16865B] mt-0.5">
+                      {tx.status || 'Settled'}
                     </p>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export const PersonalDashboard: React.FC<{
           user={user}
           onAddBeneficiary={b => {
             dispatch({ type: 'ADD_BENEFICIARY', payload: b });
-            showToast('Demonstration beneficiary added', 'success');
+            showToast('Beneficiary added', 'success');
           }}
           onRemoveBeneficiary={id => {
             dispatch({ type: 'REMOVE_BENEFICIARY', payload: id });
@@ -553,7 +553,7 @@ export const PersonalDashboard: React.FC<{
           <div className="lg:col-span-7 bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-5">
             <div className="flex items-center justify-between pb-4 border-b border-[#E2EAF1]">
               <div>
-                <p className="text-xs font-mono text-[#D99A20] font-semibold">DEMO ACCOUNT DETAILS</p>
+                <p className="text-xs font-mono text-[#28658F] font-semibold">ACCOUNT DETAILS</p>
                 <h2 className="text-xl font-display font-bold text-[#263746] mt-0.5">Account Overview</h2>
               </div>
               <Landmark size={20} className="text-[#28658F]" />
@@ -584,7 +584,7 @@ export const PersonalDashboard: React.FC<{
 
             <div className="p-5 rounded-xl bank-card-navy text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-white/90">Available Demonstration Balance ({user.currency || 'USD'})</p>
+                <p className="text-xs text-white/90">Available Balance ({user.currency || 'USD'})</p>
                 <p className="text-3xl font-display font-bold font-mono tabular-nums mt-1">{formattedBalance}</p>
               </div>
               <button
@@ -601,7 +601,7 @@ export const PersonalDashboard: React.FC<{
             <div className="flex items-center justify-between">
               <h3 className="text-base font-display font-bold text-[#263746] flex items-center gap-2">
                 <TrendingUp size={17} className="text-[#28658F]" />
-                <span>Balance Activity (Demo)</span>
+                <span>Balance Activity</span>
               </h3>
               <span className="text-xs text-slate-500">2026</span>
             </div>
@@ -631,14 +631,9 @@ export const PersonalDashboard: React.FC<{
             <div className="text-center sm:text-left flex-1">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                 <h2 className="text-2xl font-display font-bold text-[#263746]">{user.name}</h2>
-                {user.isDemoProfile && (
-                  <span className="text-[11px] font-mono font-semibold text-[#D99A20] border border-[#D99A20]/30 bg-amber-50 px-2 py-0.5 rounded">
-                    DEMO PROFILE
-                  </span>
-                )}
               </div>
               <p className="text-xs font-mono text-slate-500 mt-1">
-                @{user.username} · {user.idNumber || 'USB-DEMO-774920-P'}
+                @{user.username} · {user.idNumber || 'USB-774920-P'}
               </p>
               <div className="mt-2.5 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs text-slate-600">
                 <span className="font-semibold text-[#263746]">{user.accountTypeLabel || 'Personal Banking'}</span>
@@ -741,11 +736,6 @@ export const PersonalDashboard: React.FC<{
                     {isLocked && <Lock size={11} />}
                     <span>{isLocked ? 'TEMPORARILY LOCKED' : 'Active'}</span>
                   </span>
-                  {user.isDemoProfile && (
-                    <span className="text-[11px] font-mono text-white/95 bg-white/15 px-2 py-0.5 rounded">
-                      DEMO DATA · Prototype Only
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
@@ -768,7 +758,7 @@ export const PersonalDashboard: React.FC<{
           <div className="bg-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[#263746]">
             <div>
               <p className="text-xs font-semibold text-slate-500">
-                Available Balance ({user.currency || 'USD'} · DEMO)
+                Available Balance ({user.currency || 'USD'})
               </p>
               <p className="text-xs font-mono text-slate-400 mt-0.5">
                 Account {user.accountNumberMasked || '•••• •••• 8379'}
@@ -784,7 +774,7 @@ export const PersonalDashboard: React.FC<{
         <div className="lg:col-span-5 bg-white border border-[#E2EAF1] rounded-2xl p-6 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-3 mb-2">
             <div>
-              <p className="text-xs font-semibold text-slate-500">Demonstration Activity (2026)</p>
+              <p className="text-xs font-semibold text-slate-500">Account Activity (2026)</p>
               <h3 className="text-lg font-display font-bold text-[#263746]">
                 +${totalCredits.toLocaleString(undefined, { minimumFractionDigits: 2 })} {user.currency || 'USD'}
               </h3>

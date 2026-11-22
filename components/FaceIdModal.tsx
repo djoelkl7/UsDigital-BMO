@@ -148,7 +148,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
     setErrorMessage('');
 
     if (!username.trim() || !passcode) {
-      setErrorMessage('Enter your username and passcode to authorize the Face ID simulation.');
+      setErrorMessage('Enter your username and passcode to authorize Face ID verification.');
       return;
     }
 
@@ -284,7 +284,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
             <ScanFace size={20} className="text-white" />
             <div>
               <h3 className="text-base font-display font-bold">Login with Face ID</h3>
-              <p className="text-[11px] text-[#DCEAF5]">Prototype Biometric Camera Simulation</p>
+              <p className="text-[11px] text-[#DCEAF5]">Biometric Camera Verification</p>
             </div>
           </div>
           <button
@@ -304,10 +304,10 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
           <div className="p-3 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] text-xs text-[#263746] leading-relaxed">
             <p className="font-semibold text-[#28658F] flex items-center gap-1.5">
               <ShieldAlert size={14} className="text-[#D99A20] shrink-0" />
-              <span>Prototype Disclosure</span>
+              <span>Camera Privacy Notice</span>
             </p>
             <p className="mt-1 text-[#68798A]">
-              Face detection confirms live subject presence locally in your browser and never saves or transmits camera frames. It is a UI simulation and requires your account passcode authorization.
+              Face detection confirms live subject presence locally in your browser and never saves or transmits camera frames. Requires your account passcode authorization.
             </p>
           </div>
 

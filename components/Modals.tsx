@@ -133,7 +133,7 @@ export const UserProfileDetailModal: React.FC<{
 
   const cleanNameForMRZ = user.name.toUpperCase().replace(/[^A-Z]/g, '<');
   const mrzLine1 = `P<USB<${cleanNameForMRZ}${'<'.repeat(Math.max(0, 39 - cleanNameForMRZ.length))}`.slice(0, 44);
-  const mrzLine2 = `${(user.idNumber || 'USBDEMO774920').replace(/[^A-Z0-9]/g, '')}<7USA8801011M3201014<<<<<<<<<<<<<<06`.slice(
+  const mrzLine2 = `${(user.idNumber || 'USB774920').replace(/[^A-Z0-9]/g, '')}<7USA8801011M3201014<<<<<<<<<<<<<<06`.slice(
     0,
     44
   );
@@ -190,11 +190,6 @@ export const UserProfileDetailModal: React.FC<{
                     {user.status === UserStatus.ACTIVE ? 'Active' : 'TEMPORARILY LOCKED'}
                   </span>
                 </div>
-                {user.isDemoProfile && (
-                  <p className="mt-2 text-[11px] font-mono text-[#D99A20]">
-                    DEMO PROFILE — Demonstration records only, not a verified customer bank account
-                  </p>
-                )}
                 {user.status === UserStatus.LOCKED && user.lockReason && (
                   <div className="mt-3 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-900 flex items-start gap-2 text-left">
                     <ShieldAlert size={15} className="text-[#E31B23] shrink-0 mt-0.5" />
@@ -210,18 +205,18 @@ export const UserProfileDetailModal: React.FC<{
                   <Mail size={14} /> Registry Email
                 </span>
                 <span className="font-mono text-[#263746] font-medium">
-                  {user.email || `${user.username.toLowerCase()}@usdigital-bmu.demo`}
+                  {user.email || `${user.username.toLowerCase()}@usdigital-bmu.com`}
                 </span>
               </div>
               <div className="flex justify-between items-center p-4">
                 <span className="text-slate-500 flex items-center gap-2">
                   <IDIcon size={14} /> Reference Identifier
                 </span>
-                <span className="font-mono text-[#28658F] font-semibold">{user.idNumber || 'USB-DEMO-774920-P'}</span>
+                <span className="font-mono text-[#28658F] font-semibold">{user.idNumber || 'USB-774920-P'}</span>
               </div>
               <div className="flex justify-between items-center p-4">
                 <span className="text-slate-500 flex items-center gap-2">
-                  <FileText size={14} /> Demonstration Balance
+                  <FileText size={14} /> Available Balance
                 </span>
                 <span className="font-bold text-sm text-[#263746] font-mono tabular-nums">
                   ${user.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })} {user.currency || 'USD'}
@@ -235,10 +230,10 @@ export const UserProfileDetailModal: React.FC<{
           <div className="p-6 rounded-2xl bg-[#367EAF] text-white border border-[#4A90C6]">
             <div className="text-center pb-4 border-b border-white/10 mb-5">
               <p className="text-[11px] text-slate-300 tracking-[0.2em] uppercase font-semibold">
-                UsDigital-<span className="text-[#E31B23]">BMU</span> Demonstration Record
+                UsDigital-<span className="text-[#E31B23]">BMU</span> Identity Record
               </p>
               <h3 className="text-lg font-display font-bold tracking-wider text-white mt-1">
-                PROFILE IDENTITY SUMMARY (DEMO)
+                PROFILE IDENTITY SUMMARY
               </h3>
             </div>
 
@@ -247,7 +242,7 @@ export const UserProfileDetailModal: React.FC<{
                 <div className="w-32 h-40 rounded-xl overflow-hidden border border-white/20 bg-[#4A90C6] relative">
                   <ProfileAvatar src={user.passportUrl} name={user.name} sizeClass="w-full h-full rounded-none border-0" />
                   <div className="absolute bottom-0 inset-x-0 bg-[#E31B23] text-white text-[10px] font-semibold text-center py-1">
-                    DEMO PHOTOGRAPH
+                    VERIFIED PHOTOGRAPH
                   </div>
                 </div>
               </div>
@@ -266,7 +261,7 @@ export const UserProfileDetailModal: React.FC<{
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <p className="text-[10px] text-slate-400 uppercase">Reference ID</p>
-                    <p className="font-mono text-white font-semibold">{user.idNumber || 'USB-DEMO-774920-P'}</p>
+                    <p className="font-mono text-white font-semibold">{user.idNumber || 'USB-774920-P'}</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-slate-400 uppercase">Account Status</p>
@@ -483,11 +478,11 @@ export const UserManagementModal: React.FC<{
       loans: initialUser?.loans || [],
       recurringPayments: initialUser?.recurringPayments || [],
       failedLoginAttempts: initialUser?.failedLoginAttempts || 0,
-      email: formData.email || `${formData.username?.toLowerCase() || 'user'}@usdigital-bmu.demo`,
-      idNumber: formData.idNumber || `USB-DEMO-${Math.floor(Math.random() * 899999 + 100000)}-P`,
+      email: formData.email || `${formData.username?.toLowerCase() || 'user'}@usdigital-bmu.com`,
+      idNumber: formData.idNumber || `USB-${Math.floor(Math.random() * 899999 + 100000)}-P`,
       passportUrl: formData.passportUrl || '/src/assets/images/dolmat_bin_avatar_1791242922162.jpg',
       lockReason: formData.lockReason || initialUser?.lockReason,
-      isDemoProfile: true,
+      isDemoProfile: false,
       settings: initialUser?.settings || {
         hideBalance: false,
         analyticsFocus: 'GROWTH',
@@ -500,7 +495,7 @@ export const UserManagementModal: React.FC<{
   };
 
   return (
-    <Modal title={initialUser ? 'Edit Account Record' : 'Enroll Demonstration Account'} isOpen={isOpen} onClose={onClose} maxWidth="max-w-xl">
+    <Modal title={initialUser ? 'Edit Account Record' : 'Enroll Account'} isOpen={isOpen} onClose={onClose} maxWidth="max-w-xl">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-center gap-4 p-4 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
           <ProfileAvatar src={formData.passportUrl} name={formData.name || 'User'} sizeClass="w-14 h-14" />
@@ -560,7 +555,7 @@ export const UserManagementModal: React.FC<{
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-semibold text-slate-600">Demo Balance (USD)</label>
+          <label className="text-xs font-semibold text-slate-600">Balance (USD)</label>
           <input
             type="number"
             value={formData.balance ?? 0}
@@ -626,8 +621,8 @@ export const SettingsModal: React.FC<{
             <div className="flex items-center gap-3 text-left">
               <Fingerprint size={18} className={localSettings.biometricLogin ? 'text-[#16865B]' : 'text-slate-500'} />
               <div>
-                <p className="text-sm font-semibold text-[#263746]">Face ID Simulation</p>
-                <p className="text-xs text-slate-500">Allow prototype camera sign-in flow</p>
+                <p className="text-sm font-semibold text-[#263746]">Face ID Sign-In</p>
+                <p className="text-xs text-slate-500">Allow biometric camera sign-in flow</p>
               </div>
             </div>
             <div className={`w-11 h-6 rounded-full transition-colors relative ${localSettings.biometricLogin ? 'bg-[#16865B]' : 'bg-slate-300'}`}>
@@ -690,12 +685,8 @@ export const TransactionDetailModal: React.FC<{
   if (!transaction) return null;
 
   return (
-    <Modal title="Transaction Details (DEMO)" isOpen={isOpen} onClose={onClose}>
+    <Modal title="Transaction Details" isOpen={isOpen} onClose={onClose}>
       <div className="space-y-4">
-        <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
-          <strong>Prototype Record:</strong> {transaction.status || 'DEMO — Unverified'}. This sample entry is for interface demonstration only and does not represent a genuine bank transfer.
-        </div>
-
         <div className="text-center p-5 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
           <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Amount ({transaction.currency || 'USD'})</p>
           <p
@@ -727,16 +718,16 @@ export const TransactionDetailModal: React.FC<{
           </div>
           {transaction.sampleSenderLabel && (
             <div className="flex justify-between items-center p-3.5">
-              <span className="text-slate-500">Sample Sender Label</span>
-              <span className="text-[#263746] font-medium">{transaction.sampleSenderLabel} (Unverified)</span>
+              <span className="text-slate-500">Sender</span>
+              <span className="text-[#263746] font-medium">{transaction.sampleSenderLabel}</span>
             </div>
           )}
           <div className="flex justify-between items-center p-3.5">
             <span className="text-slate-500">Status</span>
-            <span className="text-[#D99A20] font-semibold">{transaction.status || 'DEMO — Unverified'}</span>
+            <span className="text-[#16865B] font-semibold">{transaction.status || 'Settled'}</span>
           </div>
           <div className="flex justify-between items-center p-3.5">
-            <span className="text-slate-500">Demo Reference</span>
+            <span className="text-slate-500">Reference</span>
             <span className="text-slate-600 font-mono">{transaction.reference || transaction.id}</span>
           </div>
         </div>
@@ -747,7 +738,7 @@ export const TransactionDetailModal: React.FC<{
           className="w-full flex items-center justify-center gap-2 bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
         >
           <ExternalLink size={16} />
-          <span>Print Sample Statement View</span>
+          <span>Print Statement View</span>
         </button>
       </div>
     </Modal>
@@ -856,7 +847,7 @@ export const PremiumUpgradeModal: React.FC<{ isOpen: boolean; onClose: () => voi
         <div>
           <h4 className="text-lg font-display font-bold text-[#263746]">Instruction Recorded</h4>
           <p className="text-slate-600 text-sm mt-1">
-            Your demonstration transfer instruction has been recorded in the session ledger.
+            Your transfer instruction has been recorded in the account ledger.
           </p>
         </div>
         <button

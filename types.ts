@@ -9,7 +9,7 @@ export enum UserStatus {
   LOCKED = 'LOCKED'
 }
 
-export type TransactionStatusLabel = 'DEMO — Unverified' | 'Settled' | 'Pending Review';
+export type TransactionStatusLabel = 'Settled' | 'Pending Review' | 'Completed';
 
 export interface Transaction {
   id: string;

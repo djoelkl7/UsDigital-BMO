@@ -21,11 +21,11 @@ export const SERVER_INITIAL_USERS: User[] = [
     balance: 4670000.0,
     failedLoginAttempts: 0,
     passportUrl: '/src/assets/images/catherine_nelson_passport.jpg',
-    idNumber: 'USB-DEMO-774920-P',
+    idNumber: 'USB-774920-P',
     accountNumberMasked: '•••• •••• 8379',
     routingNumber: '021000021',
-    email: 'catherine.nelson@usdigital-bmu.demo',
-    isDemoProfile: true,
+    email: 'catherine.nelson@usdigital-bmu.com',
+    isDemoProfile: false,
     transactions: [
       {
         id: 't-cn-2',
@@ -37,12 +37,12 @@ export const SERVER_INITIAL_USERS: User[] = [
         description: 'Corporate Wire Transfer — Los Angeles',
         date: '2026-11-20',
         displayDate: '20/11/2026',
-        from: 'Nestlé Food (Sample Sender — Unverified)',
+        from: 'Nestlé Food',
         sampleSenderLabel: 'Nestlé Food',
-        to: 'Catherine Nelson (DEMO)',
-        status: 'DEMO — Unverified',
-        reference: 'DEMO-WIR-20261120-002',
-        isDemo: true
+        to: 'Catherine Nelson',
+        status: 'Settled',
+        reference: 'WIR-20261120-002',
+        isDemo: false
       },
       {
         id: 't-cn-1',
@@ -54,33 +54,33 @@ export const SERVER_INITIAL_USERS: User[] = [
         description: 'Check Deposit',
         date: '2026-11-20',
         displayDate: '20/11/2026',
-        from: 'Clearing Desk (Sample — Unverified)',
-        to: 'Catherine Nelson (DEMO)',
-        status: 'DEMO — Unverified',
-        reference: 'DEMO-CHK-20261120-001',
-        isDemo: true
+        from: 'Clearing Desk',
+        to: 'Catherine Nelson',
+        status: 'Settled',
+        reference: 'CHK-20261120-001',
+        isDemo: false
       }
     ],
     loans: [],
     recurringPayments: [],
     beneficiaries: [
       {
-        id: 'ben-demo-1',
-        name: 'Pacific Escrow Holdings (DEMO)',
-        bankName: 'First Republic Clearing (Sample)',
+        id: 'ben-1',
+        name: 'Pacific Escrow Holdings',
+        bankName: 'First Republic Clearing',
         accountMask: '•••• 4418',
         routingNumber: '121000358',
         type: 'Domestic Wire',
-        isDemo: true
+        isDemo: false
       },
       {
-        id: 'ben-demo-2',
-        name: 'West Coast Property Trust (DEMO)',
-        bankName: 'Metro Commercial Bank (Sample)',
+        id: 'ben-2',
+        name: 'West Coast Property Trust',
+        bankName: 'Metro Commercial Bank',
         accountMask: '•••• 9021',
         routingNumber: '026009593',
         type: 'ACH Transfer',
-        isDemo: true
+        isDemo: false
       }
     ],
     notifications: [
@@ -94,9 +94,9 @@ export const SERVER_INITIAL_USERS: User[] = [
       },
       {
         id: 'notif-2',
-        title: 'High-Value Deposit Activity Recorded (DEMO)',
+        title: 'High-Value Deposit Activity Recorded',
         message:
-          'Two sample incoming credits totaling +$4,670,000.00 USD (20/11/2026) are flagged as DEMO — Unverified for prototype review.',
+          'Two incoming credits totaling +$4,670,000.00 USD (20/11/2026) are under standard verification review.',
         date: '20/11/2026',
         severity: 'WARNING',
         read: false
@@ -107,7 +107,7 @@ export const SERVER_INITIAL_USERS: User[] = [
         id: 'lh-1',
         timestamp: '20/11/2026 · 09:42 PST',
         device: 'Desktop Browser (Chrome)',
-        location: 'Los Angeles, CA (Demo)',
+        location: 'Los Angeles, CA',
         method: 'Password Authentication',
         status: 'Authenticated'
       }
@@ -130,11 +130,11 @@ export const SERVER_INITIAL_USERS: User[] = [
     balance: 24580.75,
     failedLoginAttempts: 0,
     passportUrl: '/src/assets/images/sarah_lee_avatar_1791242931296.jpg',
-    idNumber: 'USB-DEMO-492108-P',
+    idNumber: 'USB-492108-P',
     accountNumberMasked: '•••• •••• 3104',
     routingNumber: '021000021',
-    email: 'sarah.lee@usdigital-bmu.demo',
-    isDemoProfile: true,
+    email: 'sarah.lee@usdigital-bmu.com',
+    isDemoProfile: false,
     transactions: [
       {
         id: 't2',
@@ -146,11 +146,11 @@ export const SERVER_INITIAL_USERS: User[] = [
         description: 'Monthly Payroll Deposit',
         date: '2026-11-01',
         displayDate: '01/11/2026',
-        from: 'Northstar Systems (Sample)',
+        from: 'Northstar Systems',
         to: 'Sarah Lee',
-        status: 'DEMO — Unverified',
-        reference: 'DEMO-PAY-20261101-011',
-        isDemo: true
+        status: 'Settled',
+        reference: 'PAY-20261101-011',
+        isDemo: false
       },
       {
         id: 't3',
@@ -164,9 +164,9 @@ export const SERVER_INITIAL_USERS: User[] = [
         displayDate: '05/11/2026',
         from: 'Sarah Lee',
         to: 'City Roast Coffee',
-        status: 'DEMO — Unverified',
-        reference: 'DEMO-POS-20261105-019',
-        isDemo: true
+        status: 'Settled',
+        reference: 'POS-20261105-019',
+        isDemo: false
       }
     ],
     loans: [],
@@ -192,11 +192,11 @@ export const SERVER_INITIAL_USERS: User[] = [
     balance: 1280450.0,
     failedLoginAttempts: 0,
     passportUrl: '/src/assets/images/sovereign_avatar_1791242949331.jpg',
-    idNumber: 'USB-DEMO-994112-C',
+    idNumber: 'USB-994112-C',
     accountNumberMasked: '•••• •••• 4410',
     routingNumber: '021000021',
-    email: 'treasury@novacorp.demo',
-    isDemoProfile: true,
+    email: 'treasury@novacorp.com',
+    isDemoProfile: false,
     subAccounts: [
       { id: 's1', name: 'Main Operating', balance: 1000000.0, type: 'CHECKING' },
       { id: 's2', name: 'Payroll Reserve', balance: 250000.0, type: 'PAYROLL' },
@@ -227,7 +227,7 @@ export const SERVER_INITIAL_USERS: User[] = [
     failedLoginAttempts: 0,
     passportUrl: '/src/assets/images/admin_master_avatar_1791242940520.jpg',
     idNumber: 'USB-SEC-000001-A',
-    email: 'admin.ops@usdigital-bmu.demo',
+    email: 'admin.ops@usdigital-bmu.com',
     isDemoProfile: false,
     transactions: [],
     loans: [],

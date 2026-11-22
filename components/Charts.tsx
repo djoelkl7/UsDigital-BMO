@@ -70,7 +70,7 @@ export const YearlyStatsBarChart: React.FC<{
               color: '#FFFFFF',
               fontSize: '12px'
             }}
-            formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Demo Volume']}
+            formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Volume']}
           />
           <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={26}>
             {data.map((entry, idx) => (

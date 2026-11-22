@@ -221,11 +221,6 @@ export const Layout: React.FC<{
               <span className="text-[#68798A]">Banking</span>
               <span className="text-[#DCEAF5]">/</span>
               <h1 className="font-display font-bold text-[#263746] truncate">{NAV_TITLES[activeNav]}</h1>
-              {user.isDemoProfile && (
-                <span className="ml-2 text-[11px] font-mono font-semibold text-[#D99A20] border border-[#D99A20]/30 bg-amber-50/80 px-2 py-0.5 rounded">
-                  DEMO ENVIRONMENT
-                </span>
-              )}
             </div>
           </div>
 

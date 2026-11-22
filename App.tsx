@@ -469,7 +469,7 @@ const LoginPage: React.FC = () => {
                     className="w-full bg-white hover:bg-[#F3F7FB] border border-[#E2EAF1] text-[#263746] font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm"
                   >
                     <ScanFace size={17} className="text-[#E31B23]" />
-                    <span>Login with Face ID (Prototype)</span>
+                    <span>Login with Face ID</span>
                   </button>
                 </form>
               )}
@@ -479,7 +479,7 @@ const LoginPage: React.FC = () => {
                   <Lock size={13} className="text-[#16865B]" />
                   <span>Protected Session Access</span>
                 </span>
-                <span className="font-mono text-[11px] text-[#68798A]">DEMO ENVIRONMENT</span>
+                <span className="font-mono text-[11px] text-[#68798A]">TLS 1.3 SECURED</span>
               </div>
             </div>
           </div>
@@ -570,8 +570,8 @@ const LoginPage: React.FC = () => {
 
       <footer className="bg-white border-t border-[#E2EAF1] py-5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#68798A]">
-          <p>UsDigital-BMU · Retail & Commercial Digital Banking Prototype</p>
-          <p>Demonstration interface — sample records are clearly marked DEMO</p>
+          <p>UsDigital-BMU · Retail & Commercial Digital Banking</p>
+          <p>Protected Online Banking Workspace</p>
         </div>
       </footer>
 

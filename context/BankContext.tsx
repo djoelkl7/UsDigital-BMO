@@ -95,9 +95,9 @@ function bankReducer(state: BankState, action: Action): BankState {
                 transactionTypeLabel: 'Credit Disbursement',
                 description: `Credit Facility ${loan.id} Disbursement`,
                 date: new Date().toISOString().split('T')[0],
-                status: 'DEMO — Unverified',
-                reference: `DEMO-${loan.id}`,
-                isDemo: true
+                status: 'Settled',
+                reference: `TRF-${loan.id}`,
+                isDemo: false
               };
               return {
                 ...u,

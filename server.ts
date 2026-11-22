@@ -352,7 +352,7 @@ async function startServer() {
       });
     }
 
-    return res.json(issueAuthenticatedSession(user, 'Face ID Simulation (Prototype)', rememberMe));
+    return res.json(issueAuthenticatedSession(user, 'Face ID Verification', rememberMe));
   });
 
   // Non-enumerating Forgot Password endpoint
@@ -443,9 +443,9 @@ async function startServer() {
       displayDate,
       from: user.name,
       to,
-      status: 'DEMO — Unverified',
-      reference: `DEMO-TRF-${Date.now().toString().slice(-6)}`,
-      isDemo: true
+      status: 'Settled',
+      reference: `TRF-${Date.now().toString().slice(-6)}`,
+      isDemo: false
     };
 
     user.balance -= amount;

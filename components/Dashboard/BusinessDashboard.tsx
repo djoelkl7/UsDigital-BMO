@@ -36,7 +36,7 @@ export const BusinessDashboard: React.FC<{
       showToast(user.lockReason || 'Commercial account is temporarily locked.', 'error');
       return;
     }
-    showToast('Demonstration bulk payout workflow triggered', 'info');
+    showToast('Bulk payout workflow triggered', 'info');
   };
 
   return (
@@ -65,7 +65,7 @@ export const BusinessDashboard: React.FC<{
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <p className="text-xs text-[#DCEAF5] font-semibold uppercase tracking-wider">
-                  Commercial Treasury Liquidity (DEMO)
+                  Commercial Treasury Liquidity
                 </p>
                 <p className="font-mono text-xs text-[#DCEAF5] mt-1">
                   Account {user.accountNumberMasked || '•••• •••• 4410'}
@@ -128,9 +128,9 @@ export const BusinessDashboard: React.FC<{
           <div>
             <h3 className="font-display font-bold text-base text-[#263746] flex items-center gap-2">
               <BarChart3 size={18} className="text-[#4A90C6]" />
-              <span>Cash Flow (Demo)</span>
+              <span>Cash Flow</span>
             </h3>
-            <p className="text-xs text-[#68798A] mt-0.5">Sample month-to-date movement</p>
+            <p className="text-xs text-[#68798A] mt-0.5">Month-to-date movement</p>
 
             <div className="space-y-4 my-6">
               <div className="flex justify-between items-center">
@@ -150,7 +150,7 @@ export const BusinessDashboard: React.FC<{
           <div className="space-y-2.5">
             <button
               type="button"
-              onClick={() => showToast('Sub-account inquiry logged in demonstration view', 'info')}
+              onClick={() => showToast('Sub-account inquiry logged', 'info')}
               className="w-full flex items-center justify-center gap-2 bg-[#367EAF] hover:bg-[#28658F] text-white py-3 rounded-xl text-xs font-semibold transition-colors"
             >
               <Plus size={15} />
@@ -158,7 +158,7 @@ export const BusinessDashboard: React.FC<{
             </button>
             <button
               type="button"
-              onClick={() => showToast('Demonstration treasury report exported', 'success')}
+              onClick={() => showToast('Treasury report exported', 'success')}
               className="w-full flex items-center justify-center gap-2 border border-[#E2EAF1] hover:bg-[#F3F7FB] text-[#263746] py-3 rounded-xl text-xs font-semibold transition-colors"
             >
               <Download size={15} />
@@ -175,7 +175,7 @@ export const BusinessDashboard: React.FC<{
       >
         <div className="lg:col-span-2 bg-white border border-[#E2EAF1] p-6 rounded-2xl">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-display font-bold text-base text-[#263746]">Cash Movement (Sample)</h3>
+            <h3 className="font-display font-bold text-base text-[#263746]">Cash Movement</h3>
             <span className="text-xs text-[#68798A]">Weekly inflow vs. outflow</span>
           </div>
           <CashFlowChart data={cashFlowData} />
@@ -191,7 +191,7 @@ export const BusinessDashboard: React.FC<{
             <div className="p-4 bg-[#367EAF] text-white rounded-xl flex items-center justify-between">
               <div>
                 <p className="text-[11px] text-[#DCEAF5] font-semibold uppercase">Scheduled Run</p>
-                <p className="font-semibold text-sm mt-0.5">Sample Cycle</p>
+                <p className="font-semibold text-sm mt-0.5">Standard Cycle</p>
               </div>
               <p className="text-lg font-display font-bold font-mono tabular-nums">$12,450.00</p>
             </div>
