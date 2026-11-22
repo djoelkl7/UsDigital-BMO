@@ -32,13 +32,13 @@ export const StatementsView: React.FC<{
 }> = ({ user, onPrint }) => {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="bg-white border border-slate-200 rounded-2xl p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+      <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E2EAF1]">
           <div>
             <p className="text-xs font-mono uppercase tracking-wider text-[#D99A20] font-semibold">
               DEMO — UNVERIFIED PROTOTYPE STATEMENT
             </p>
-            <h2 className="text-xl font-display font-bold text-[#1C3D5A] mt-1">
+            <h2 className="text-xl font-display font-bold text-[#263746] mt-1">
               Account Statements
             </h2>
             <p className="text-sm text-slate-500 mt-0.5">
@@ -48,7 +48,7 @@ export const StatementsView: React.FC<{
           <button
             type="button"
             onClick={onPrint}
-            className="inline-flex items-center gap-2 bg-[#2B629B] hover:bg-[#235282] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0"
+            className="inline-flex items-center gap-2 bg-[#367EAF] hover:bg-[#28658F] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0"
           >
             <Printer size={15} />
             <span>Print Statement (DEMO)</span>
@@ -56,17 +56,17 @@ export const StatementsView: React.FC<{
         </div>
 
         <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-[#F2F6FB] border border-slate-200">
+          <div className="p-4 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1]">
             <p className="text-xs text-slate-500">Statement Period</p>
-            <p className="text-sm font-bold text-[#1C3D5A] mt-1 font-mono">01/11/2026 – 30/11/2026</p>
+            <p className="text-sm font-bold text-[#263746] mt-1 font-mono">01/11/2026 – 30/11/2026</p>
           </div>
-          <div className="p-4 rounded-xl bg-[#F2F6FB] border border-slate-200">
+          <div className="p-4 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1]">
             <p className="text-xs text-slate-500">Account Classification</p>
-            <p className="text-sm font-bold text-[#1C3D5A] mt-1">{user.accountTypeLabel || 'Personal Banking'}</p>
+            <p className="text-sm font-bold text-[#263746] mt-1">{user.accountTypeLabel || 'Personal Banking'}</p>
           </div>
-          <div className="p-4 rounded-xl bg-[#F2F6FB] border border-slate-200">
+          <div className="p-4 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1]">
             <p className="text-xs text-slate-500">Closing Balance (DEMO)</p>
-            <p className="text-sm font-bold text-[#1C3D5A] mt-1 font-mono tabular-nums">
+            <p className="text-sm font-bold text-[#263746] mt-1 font-mono tabular-nums">
               ${user.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })} {user.currency || 'USD'}
             </p>
           </div>
@@ -75,7 +75,7 @@ export const StatementsView: React.FC<{
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-slate-200 text-xs uppercase text-slate-500">
+              <tr className="border-b border-[#E2EAF1] text-xs uppercase text-slate-500">
                 <th className="py-3 font-semibold">Date</th>
                 <th className="py-3 font-semibold">Description</th>
                 <th className="py-3 font-semibold">Reference</th>
@@ -86,12 +86,12 @@ export const StatementsView: React.FC<{
             <tbody className="divide-y divide-slate-100">
               {user.transactions.length > 0 ? (
                 user.transactions.map(tx => (
-                  <tr key={tx.id} className="hover:bg-[#F2F6FB]/60">
+                  <tr key={tx.id} className="hover:bg-[#F3F7FB]/60">
                     <td className="py-3.5 font-mono text-xs text-slate-600 tabular-nums whitespace-nowrap">
                       {tx.displayDate || tx.date}
                     </td>
                     <td className="py-3.5">
-                      <p className="font-semibold text-[#1C3D5A]">{tx.description}</p>
+                      <p className="font-semibold text-[#263746]">{tx.description}</p>
                       {tx.sampleSenderLabel && (
                         <p className="text-xs text-slate-500">Sample sender: {tx.sampleSenderLabel} (Unverified)</p>
                       )}
@@ -100,7 +100,7 @@ export const StatementsView: React.FC<{
                     <td className="py-3.5 text-xs font-semibold text-[#D99A20]">{tx.status || 'DEMO — Unverified'}</td>
                     <td
                       className={`py-3.5 text-right font-mono font-bold tabular-nums whitespace-nowrap ${
-                        tx.type === 'CREDIT' ? 'text-[#16865B]' : 'text-[#1C3D5A]'
+                        tx.type === 'CREDIT' ? 'text-[#16865B]' : 'text-[#263746]'
                       }`}
                     >
                       {tx.type === 'CREDIT' ? '+' : '-'}$
@@ -155,13 +155,13 @@ export const PaymentsView: React.FC<{
               <p className="text-xs font-bold uppercase tracking-wider text-[#E31B23]">
                 Outgoing Payments & Withdrawals Disabled
               </p>
-              <p className="text-sm text-[#1C3D5A] mt-1 leading-relaxed">{user.lockReason || CATHERINE_LOCK_NOTICE}</p>
+              <p className="text-sm text-[#263746] mt-1 leading-relaxed">{user.lockReason || CATHERINE_LOCK_NOTICE}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => onNavigate('SUPPORT')}
-            className="bg-[#2B629B] hover:bg-[#235282] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0"
+            className="bg-[#367EAF] hover:bg-[#28658F] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0"
           >
             Contact Support
           </button>
@@ -169,10 +169,10 @@ export const PaymentsView: React.FC<{
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+        <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Pay Bills (Demo)</h2>
-            <CreditCard size={18} className="text-[#2B629B]" />
+            <h2 className="text-lg font-display font-bold text-[#263746]">Pay Bills (Demo)</h2>
+            <CreditCard size={18} className="text-[#28658F]" />
           </div>
           <p className="text-xs text-slate-500">
             Schedule or submit bill payments from your {user.accountTypeLabel || 'Personal Banking'} account.
@@ -184,7 +184,7 @@ export const PaymentsView: React.FC<{
               <select
                 value={billPayee}
                 onChange={e => setBillPayee(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm text-[#1C3D5A] outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm text-[#263746] outline-none focus:border-[#4A90C6]"
               >
                 <option>Pacific Electric & Gas (Demo)</option>
                 <option>Metropolitan Water District (Demo)</option>
@@ -200,7 +200,7 @@ export const PaymentsView: React.FC<{
                 min="1"
                 value={billAmount}
                 onChange={e => setBillAmount(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono tabular-nums text-[#1C3D5A] outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono tabular-nums text-[#263746] outline-none focus:border-[#4A90C6]"
               />
             </div>
 
@@ -209,7 +209,7 @@ export const PaymentsView: React.FC<{
               className={`w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors ${
                 isLocked
                   ? 'bg-slate-200 text-slate-600 hover:bg-slate-300'
-                  : 'bg-[#2B629B] hover:bg-[#235282] text-white'
+                  : 'bg-[#367EAF] hover:bg-[#28658F] text-white'
               }`}
             >
               {isLocked && <Lock size={15} />}
@@ -218,9 +218,9 @@ export const PaymentsView: React.FC<{
           </form>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+        <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4 flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Transfers & Withdrawals</h2>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Transfers & Withdrawals</h2>
             <p className="text-xs text-slate-500 mt-1">
               Initiate domestic wires, peer transfers, or standing payment instructions.
             </p>
@@ -229,43 +229,43 @@ export const PaymentsView: React.FC<{
               <button
                 type="button"
                 onClick={() => (isLocked ? onRestrictedAttempt('Outgoing Transfers') : onOpenTransfer())}
-                className="w-full p-4 rounded-xl border border-slate-200 hover:border-[#2B629B] bg-[#F2F6FB] flex items-center justify-between text-left transition-colors"
+                className="w-full p-4 rounded-xl border border-[#E2EAF1] hover:border-[#4A90C6] bg-[#F3F7FB] flex items-center justify-between text-left transition-colors"
               >
                 <div>
-                  <p className="text-sm font-bold text-[#1C3D5A]">Transfer Money</p>
+                  <p className="text-sm font-bold text-[#263746]">Transfer Money</p>
                   <p className="text-xs text-slate-500">
                     {isLocked ? 'Disabled while account verification is pending' : 'Send USD to saved beneficiaries'}
                   </p>
                 </div>
-                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#1C3D5A]" />}
+                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#263746]" />}
               </button>
 
               <button
                 type="button"
                 onClick={() => (isLocked ? onRestrictedAttempt('Withdrawals') : onOpenTransfer())}
-                className="w-full p-4 rounded-xl border border-slate-200 hover:border-[#2B629B] bg-[#F2F6FB] flex items-center justify-between text-left transition-colors"
+                className="w-full p-4 rounded-xl border border-[#E2EAF1] hover:border-[#4A90C6] bg-[#F3F7FB] flex items-center justify-between text-left transition-colors"
               >
                 <div>
-                  <p className="text-sm font-bold text-[#1C3D5A]">Cash & ACH Withdrawal</p>
+                  <p className="text-sm font-bold text-[#263746]">Cash & ACH Withdrawal</p>
                   <p className="text-xs text-slate-500">
                     {isLocked ? 'Disabled during temporary security lock' : 'Withdraw to linked external bank'}
                   </p>
                 </div>
-                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#1C3D5A]" />}
+                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#263746]" />}
               </button>
 
               <button
                 type="button"
                 onClick={() => (isLocked ? onRestrictedAttempt('Standing Orders') : onOpenRecurring())}
-                className="w-full p-4 rounded-xl border border-slate-200 hover:border-[#2B629B] bg-[#F2F6FB] flex items-center justify-between text-left transition-colors"
+                className="w-full p-4 rounded-xl border border-[#E2EAF1] hover:border-[#4A90C6] bg-[#F3F7FB] flex items-center justify-between text-left transition-colors"
               >
                 <div>
-                  <p className="text-sm font-bold text-[#1C3D5A]">Recurring Mandates</p>
+                  <p className="text-sm font-bold text-[#263746]">Recurring Mandates</p>
                   <p className="text-xs text-slate-500">
                     {isLocked ? 'Disabled while account is locked' : 'Manage scheduled outgoing payments'}
                   </p>
                 </div>
-                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#1C3D5A]" />}
+                {isLocked ? <Lock size={16} className="text-[#E31B23]" /> : <ArrowUpRight size={16} className="text-[#263746]" />}
               </button>
             </div>
           </div>
@@ -308,13 +308,13 @@ export const BeneficiariesView: React.FC<{
 
   return (
     <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+      <div className="lg:col-span-7 bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Saved Beneficiaries (DEMO)</h2>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Saved Beneficiaries (DEMO)</h2>
             <p className="text-xs text-slate-500">Sample payees stored in this demonstration workspace</p>
           </div>
-          <Users size={18} className="text-[#2B629B]" />
+          <Users size={18} className="text-[#28658F]" />
         </div>
 
         <div className="divide-y divide-slate-200">
@@ -322,7 +322,7 @@ export const BeneficiariesView: React.FC<{
             list.map(b => (
               <div key={b.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-bold text-[#1C3D5A]">{b.name}</p>
+                  <p className="text-sm font-bold text-[#263746]">{b.name}</p>
                   <p className="text-xs text-slate-500 mt-0.5">
                     {b.bankName} · <span className="font-mono">{b.accountMask}</span> · {b.type}
                   </p>
@@ -331,7 +331,7 @@ export const BeneficiariesView: React.FC<{
                   <button
                     type="button"
                     onClick={() => onAttemptTransfer(b.name)}
-                    className="px-3 py-1.5 rounded-lg bg-[#2B629B] hover:bg-[#235282] text-white text-xs font-semibold"
+                    className="px-3 py-1.5 rounded-lg bg-[#367EAF] hover:bg-[#28658F] text-white text-xs font-semibold"
                   >
                     Send
                   </button>
@@ -352,8 +352,8 @@ export const BeneficiariesView: React.FC<{
         </div>
       </div>
 
-      <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6">
-        <h3 className="text-base font-display font-bold text-[#1C3D5A] mb-1">Add Sample Beneficiary</h3>
+      <div className="lg:col-span-5 bg-white border border-[#E2EAF1] rounded-2xl p-6">
+        <h3 className="text-base font-display font-bold text-[#263746] mb-1">Add Sample Beneficiary</h3>
         <p className="text-xs text-slate-500 mb-4">Records added here are demonstration entries only.</p>
         <form onSubmit={handleAdd} className="space-y-3">
           <div>
@@ -364,7 +364,7 @@ export const BeneficiariesView: React.FC<{
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="e.g. Harbor Consulting LLC"
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
             />
           </div>
           <div>
@@ -375,7 +375,7 @@ export const BeneficiariesView: React.FC<{
               value={bankName}
               onChange={e => setBankName(e.target.value)}
               placeholder="e.g. Sample Commercial Bank"
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -386,7 +386,7 @@ export const BeneficiariesView: React.FC<{
                 value={accountMask}
                 onChange={e => setAccountMask(e.target.value)}
                 placeholder="•••• 1234"
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono outline-none focus:border-[#4A90C6]"
               />
             </div>
             <div>
@@ -396,13 +396,13 @@ export const BeneficiariesView: React.FC<{
                 value={routingNumber}
                 onChange={e => setRoutingNumber(e.target.value)}
                 placeholder="021000021"
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-mono outline-none focus:border-[#4A90C6]"
               />
             </div>
           </div>
           <button
             type="submit"
-            className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-2.5 rounded-xl text-sm flex items-center justify-center gap-1.5"
+            className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-2.5 rounded-xl text-sm flex items-center justify-center gap-1.5"
           >
             <Plus size={16} />
             <span>Add Beneficiary</span>
@@ -470,10 +470,10 @@ export const SecurityCentreView: React.FC<{
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Password Management */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+        <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2.5">
             <KeyRound size={18} className="text-[#E31B23]" />
-            <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Password Management</h2>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Password Management</h2>
           </div>
           <p className="text-xs text-slate-500">
             Update your sign-in passcode. Passwords are verified and hashed using scrypt on the server.
@@ -487,7 +487,7 @@ export const SecurityCentreView: React.FC<{
                 required
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
               />
             </div>
             <div>
@@ -498,7 +498,7 @@ export const SecurityCentreView: React.FC<{
                 minLength={8}
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
               />
             </div>
             <div>
@@ -509,13 +509,13 @@ export const SecurityCentreView: React.FC<{
                 minLength={8}
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
               />
             </div>
             <button
               type="submit"
               disabled={isUpdatingPw}
-              className="w-full bg-[#2B629B] hover:bg-[#235282] disabled:opacity-60 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
+              className="w-full bg-[#367EAF] hover:bg-[#28658F] disabled:opacity-60 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
             >
               {isUpdatingPw ? 'Updating Passcode...' : 'Update Passcode'}
             </button>
@@ -524,20 +524,20 @@ export const SecurityCentreView: React.FC<{
 
         {/* Session & Biometric Settings */}
         <div className="space-y-6">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+          <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
             <div className="flex items-center gap-2.5">
-              <Clock size={18} className="text-[#2B629B]" />
-              <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Active Session Management</h2>
+              <Clock size={18} className="text-[#28658F]" />
+              <h2 className="text-lg font-display font-bold text-[#263746]">Active Session Management</h2>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#F2F6FB] border border-slate-200 space-y-2 text-xs">
+            <div className="p-4 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-slate-500">Authentication Method</span>
-                <span className="font-semibold text-[#1C3D5A]">{session?.authMethod || 'Password Authentication'}</span>
+                <span className="font-semibold text-[#263746]">{session?.authMethod || 'Password Authentication'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Session Expires</span>
-                <span className="font-mono font-semibold text-[#1C3D5A]">{sessionExpiryText}</span>
+                <span className="font-mono font-semibold text-[#263746]">{sessionExpiryText}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Token Storage</span>
@@ -554,12 +554,12 @@ export const SecurityCentreView: React.FC<{
             </button>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-3">
+          <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <Fingerprint size={18} className="text-[#16865B]" />
                 <div>
-                  <h3 className="text-sm font-display font-bold text-[#1C3D5A]">Biometric Face ID Simulation</h3>
+                  <h3 className="text-sm font-display font-bold text-[#263746]">Biometric Face ID Simulation</h3>
                   <p className="text-xs text-slate-500">Enable prototype camera preview login option</p>
                 </div>
               </div>
@@ -589,10 +589,10 @@ export const SecurityCentreView: React.FC<{
       </div>
 
       {/* Login History Demonstration */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6">
+      <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-display font-bold text-[#1C3D5A]">Login History (Demonstration)</h3>
+            <h3 className="text-base font-display font-bold text-[#263746]">Login History (Demonstration)</h3>
             <p className="text-xs text-slate-500">Recent authentication events for this session</p>
           </div>
           <ShieldCheck size={18} className="text-[#16865B]" />
@@ -601,7 +601,7 @@ export const SecurityCentreView: React.FC<{
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 uppercase">
+              <tr className="border-b border-[#E2EAF1] text-slate-500 uppercase">
                 <th className="py-2.5 font-semibold">Timestamp</th>
                 <th className="py-2.5 font-semibold">Method</th>
                 <th className="py-2.5 font-semibold">Device</th>
@@ -612,7 +612,7 @@ export const SecurityCentreView: React.FC<{
               {(user.loginHistory || []).map(entry => (
                 <tr key={entry.id}>
                   <td className="py-3 font-mono text-slate-600">{entry.timestamp}</td>
-                  <td className="py-3 font-medium text-[#1C3D5A]">{entry.method}</td>
+                  <td className="py-3 font-medium text-[#263746]">{entry.method}</td>
                   <td className="py-3 text-slate-500">{entry.device}</td>
                   <td
                     className={`py-3 text-right font-semibold ${
@@ -641,12 +641,12 @@ export const NotificationsView: React.FC<{
 
   return (
     <div className="max-w-4xl mx-auto space-y-5">
-      <div className="bg-white border border-slate-200 rounded-2xl p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+      <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E2EAF1]">
           <div className="flex items-center gap-2.5">
             <Bell size={19} className="text-[#E31B23]" />
             <div>
-              <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Security & Account Notifications</h2>
+              <h2 className="text-lg font-display font-bold text-[#263746]">Security & Account Notifications</h2>
               <p className="text-xs text-slate-500">Alerts and status updates for your UsDigital-BMU profile</p>
             </div>
           </div>
@@ -655,7 +655,7 @@ export const NotificationsView: React.FC<{
             <button
               type="button"
               onClick={onMarkAllRead}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2B629B] hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#28658F] hover:underline"
             >
               <CheckCheck size={14} />
               <span>Mark all as read</span>
@@ -669,7 +669,7 @@ export const NotificationsView: React.FC<{
               <div
                 key={n.id}
                 className={`py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4 ${
-                  !n.read ? 'bg-[#F2F6FB]/70 -mx-3 px-3 rounded-xl' : ''
+                  !n.read ? 'bg-[#F3F7FB]/70 -mx-3 px-3 rounded-xl' : ''
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -679,14 +679,14 @@ export const NotificationsView: React.FC<{
                         ? 'bg-red-50 text-[#E31B23]'
                         : n.severity === 'WARNING'
                         ? 'bg-amber-50 text-[#D99A20]'
-                        : 'bg-slate-100 text-[#1C3D5A]'
+                        : 'bg-slate-100 text-[#263746]'
                     }`}
                   >
                     <ShieldAlert size={17} />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-[#1C3D5A]">{n.title}</p>
+                      <p className="text-sm font-bold text-[#263746]">{n.title}</p>
                       {!n.read && <span className="text-[11px] font-semibold text-[#E31B23]">Unread</span>}
                     </div>
                     <p className="text-xs text-slate-600 mt-1 leading-relaxed">{n.message}</p>
@@ -699,7 +699,7 @@ export const NotificationsView: React.FC<{
                     <button
                       type="button"
                       onClick={() => onNavigate('SUPPORT')}
-                      className="px-3 py-1.5 rounded-lg bg-[#2B629B] text-white text-xs font-semibold"
+                      className="px-3 py-1.5 rounded-lg bg-[#367EAF] text-white text-xs font-semibold"
                     >
                       Support
                     </button>
@@ -708,7 +708,7 @@ export const NotificationsView: React.FC<{
                     <button
                       type="button"
                       onClick={() => onMarkRead(n.id)}
-                      className="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                      className="px-3 py-1.5 rounded-lg border border-[#E2EAF1] text-xs font-semibold text-slate-600 hover:bg-slate-100"
                     >
                       Mark Read
                     </button>
@@ -743,11 +743,11 @@ export const SupportView: React.FC<{
 
   return (
     <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 space-y-5">
+      <div className="lg:col-span-7 bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-5">
         <div className="flex items-center gap-2.5">
           <HelpCircle size={20} className="text-[#E31B23]" />
           <div>
-            <h2 className="text-lg font-display font-bold text-[#1C3D5A]">Help & Client Support Desk</h2>
+            <h2 className="text-lg font-display font-bold text-[#263746]">Help & Client Support Desk</h2>
             <p className="text-xs text-slate-500">UsDigital-BMU Account Verification & Assistance (Demo Desk)</p>
           </div>
         </div>
@@ -762,14 +762,14 @@ export const SupportView: React.FC<{
         {submittedRef ? (
           <div className="p-6 rounded-xl bg-emerald-50 border border-emerald-200 space-y-3 text-center">
             <CheckCircle2 size={32} className="text-[#16865B] mx-auto" />
-            <h3 className="text-base font-display font-bold text-[#1C3D5A]">Support Request Recorded (Demo)</h3>
+            <h3 className="text-base font-display font-bold text-[#263746]">Support Request Recorded (Demo)</h3>
             <p className="text-xs text-slate-600">
               Reference <span className="font-mono font-bold">{submittedRef}</span> has been logged in this demonstration session. No live banking ticket was transmitted.
             </p>
             <button
               type="button"
               onClick={() => setSubmittedRef(null)}
-              className="px-4 py-2 bg-[#2B629B] text-white text-xs font-semibold rounded-xl"
+              className="px-4 py-2 bg-[#367EAF] text-white text-xs font-semibold rounded-xl"
             >
               Submit Another Inquiry
             </button>
@@ -783,7 +783,7 @@ export const SupportView: React.FC<{
                 required
                 value={subject}
                 onChange={e => setSubject(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm text-[#1C3D5A] outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm text-[#263746] outline-none focus:border-[#4A90C6]"
               />
             </div>
 
@@ -795,13 +795,13 @@ export const SupportView: React.FC<{
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder="Describe your account verification or support question..."
-                className="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm text-[#1C3D5A] outline-none focus:border-[#2B629B]"
+                className="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm text-[#263746] outline-none focus:border-[#4A90C6]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
+              className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <Send size={15} />
               <span>Send Support Inquiry</span>
@@ -811,27 +811,27 @@ export const SupportView: React.FC<{
       </div>
 
       <div className="lg:col-span-5 space-y-4">
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
-          <h3 className="text-base font-display font-bold text-[#1C3D5A]">Direct Support Channels (Demo)</h3>
+        <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 space-y-4">
+          <h3 className="text-base font-display font-bold text-[#263746]">Direct Support Channels (Demo)</h3>
           <div className="space-y-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-[#F2F6FB] border border-slate-200 flex items-start gap-3">
-              <Phone size={16} className="text-[#1C3D5A] shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
+              <Phone size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-[#1C3D5A]">Verification Desk Telephone</p>
+                <p className="font-bold text-[#263746]">Verification Desk Telephone</p>
                 <p className="font-mono text-slate-600 mt-0.5">+1 (800) 555-0194 (Sample)</p>
               </div>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#F2F6FB] border border-slate-200 flex items-start gap-3">
-              <Mail size={16} className="text-[#1C3D5A] shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
+              <Mail size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-[#1C3D5A]">Client Support Email</p>
+                <p className="font-bold text-[#263746]">Client Support Email</p>
                 <p className="font-mono text-slate-600 mt-0.5">support@usdigital-bmu.demo</p>
               </div>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#F2F6FB] border border-slate-200 flex items-start gap-3">
-              <Building2 size={16} className="text-[#1C3D5A] shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
+              <Building2 size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-[#1C3D5A]">Compliance Review Hours</p>
+                <p className="font-bold text-[#263746]">Compliance Review Hours</p>
                 <p className="text-slate-600 mt-0.5">Monday – Friday, 08:00 – 20:00 EST</p>
               </div>
             </div>

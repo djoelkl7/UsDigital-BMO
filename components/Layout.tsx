@@ -110,18 +110,18 @@ export const Layout: React.FC<{
   const menuItems = user.role === UserRole.ADMIN ? adminNavItems : clientNavItems;
 
   return (
-    <div className="min-h-screen bg-[#F2F6FB] text-[#2A4158] flex overflow-x-hidden">
+    <div className="min-h-screen bg-[#F3F7FB] text-[#263746] flex overflow-x-hidden">
       {/* Mobile Sidebar Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[#1C3D5A]/45 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-40 bg-[#263746]/45 backdrop-blur-xs lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Morning Blue Institutional Sidebar */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 h-screen bg-[#2B629B] text-white w-64 flex flex-col border-r border-[#235282] transition-transform duration-200 shrink-0 ${
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen bg-[#367EAF] text-white w-64 flex flex-col border-r border-[#28658F] transition-transform duration-200 shrink-0 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
@@ -135,7 +135,7 @@ export const Layout: React.FC<{
           </button>
           <button
             type="button"
-            className="lg:hidden p-2 rounded-lg text-blue-100 hover:bg-white/15 min-h-[40px] min-w-[40px] flex items-center justify-center"
+            className="lg:hidden p-2 rounded-lg text-white/90 hover:bg-white/15 min-h-[40px] min-w-[40px] flex items-center justify-center"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close navigation menu"
           >
@@ -153,12 +153,12 @@ export const Layout: React.FC<{
                 onClick={() => handleSelectNav(item.id)}
                 className={`w-full flex items-center justify-between gap-2.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors whitespace-nowrap min-h-[42px] ${
                   isActive
-                    ? 'bg-white text-[#1C3D5A] font-semibold shadow-xs'
-                    : 'text-blue-50/90 hover:bg-white/10 hover:text-white border border-transparent'
+                    ? 'bg-white text-[#28658F] font-semibold shadow-xs'
+                    : 'text-white/90 hover:bg-[#28658F]/70 hover:text-white border border-transparent'
                 }`}
               >
                 <span className="flex items-center gap-3 min-w-0">
-                  <span className={isActive ? 'text-[#E31B23]' : 'text-blue-100/80'}>{item.icon}</span>
+                  <span className={isActive ? 'text-[#E31B23]' : 'text-[#DCEAF5]'}>{item.icon}</span>
                   <span className="truncate">{item.label}</span>
                 </span>
                 {item.badge !== undefined && (
@@ -202,12 +202,12 @@ export const Layout: React.FC<{
       {/* Main Content Shell */}
       <div className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top Navigation Bar */}
-        <header className="h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between gap-4 sticky top-0 z-30 shrink-0">
+        <header className="h-16 bg-white border-b border-[#E2EAF1] px-4 md:px-8 flex items-center justify-between gap-4 sticky top-0 z-30 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-[#1C3D5A] hover:bg-[#E9F1FA] min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="lg:hidden p-2 rounded-xl text-[#28658F] hover:bg-[#DCEAF5] min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Open navigation menu"
             >
               <Menu size={20} />
@@ -218,9 +218,9 @@ export const Layout: React.FC<{
             </div>
 
             <div className="hidden lg:flex items-center gap-2 text-sm min-w-0">
-              <span className="text-slate-400">Banking</span>
-              <span className="text-slate-300">/</span>
-              <h1 className="font-display font-bold text-[#1C3D5A] truncate">{NAV_TITLES[activeNav]}</h1>
+              <span className="text-[#68798A]">Banking</span>
+              <span className="text-[#DCEAF5]">/</span>
+              <h1 className="font-display font-bold text-[#263746] truncate">{NAV_TITLES[activeNav]}</h1>
               {user.isDemoProfile && (
                 <span className="ml-2 text-[11px] font-mono font-semibold text-[#D99A20] border border-[#D99A20]/30 bg-amber-50/80 px-2 py-0.5 rounded">
                   DEMO ENVIRONMENT
@@ -235,8 +235,8 @@ export const Layout: React.FC<{
               onClick={() => handleSelectNav('SUPPORT')}
               className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors min-h-[40px] whitespace-nowrap ${
                 activeNav === 'SUPPORT'
-                  ? 'bg-[#2B629B] text-white'
-                  : 'text-[#2A4158] hover:bg-[#E9F1FA]'
+                  ? 'bg-[#367EAF] text-white'
+                  : 'text-[#263746] hover:bg-[#DCEAF5]'
               }`}
             >
               <HelpCircle size={15} />
@@ -248,8 +248,8 @@ export const Layout: React.FC<{
               onClick={() => handleSelectNav('NOTIFICATIONS')}
               className={`relative p-2.5 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center ${
                 activeNav === 'NOTIFICATIONS'
-                  ? 'bg-[#2B629B] text-white'
-                  : 'text-[#2A4158] hover:bg-[#E9F1FA]'
+                  ? 'bg-[#367EAF] text-white'
+                  : 'text-[#263746] hover:bg-[#DCEAF5]'
               }`}
               aria-label="Notifications"
             >
@@ -264,46 +264,46 @@ export const Layout: React.FC<{
               <button
                 type="button"
                 onClick={() => setAccountMenuOpen(prev => !prev)}
-                className="flex items-center gap-2 pl-1.5 pr-2.5 py-1.5 rounded-xl border border-slate-200 hover:bg-[#F2F6FB] transition-colors min-h-[40px]"
+                className="flex items-center gap-2 pl-1.5 pr-2.5 py-1.5 rounded-xl border border-[#E2EAF1] hover:bg-[#F3F7FB] transition-colors min-h-[40px]"
               >
                 <ProfileAvatar src={user.passportUrl} name={user.name} sizeClass="w-7 h-7" />
-                <span className="hidden md:inline text-xs font-semibold text-[#1C3D5A] max-w-[120px] truncate">
+                <span className="hidden md:inline text-xs font-semibold text-[#263746] max-w-[120px] truncate">
                   {user.name}
                 </span>
-                <ChevronDown size={14} className="text-slate-400" />
+                <ChevronDown size={14} className="text-[#68798A]" />
               </button>
 
               {isAccountMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50">
-                  <div className="px-4 py-2.5 border-b border-slate-100">
-                    <p className="text-xs font-bold text-[#1C3D5A] truncate">{user.name}</p>
-                    <p className="text-[11px] text-slate-500 font-mono truncate">@{user.username}</p>
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-[#E2EAF1] rounded-xl shadow-lg py-1.5 z-50">
+                  <div className="px-4 py-2.5 border-b border-[#E2EAF1]">
+                    <p className="text-xs font-bold text-[#263746] truncate">{user.name}</p>
+                    <p className="text-[11px] text-[#68798A] font-mono truncate">@{user.username}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => handleSelectNav('PROFILE')}
-                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#2A4158] hover:bg-[#F2F6FB] flex items-center gap-2.5"
+                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#263746] hover:bg-[#F3F7FB] flex items-center gap-2.5"
                   >
-                    <UserIcon size={14} className="text-slate-400" />
+                    <UserIcon size={14} className="text-[#4A90C6]" />
                     <span>My Profile</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSelectNav(user.role === UserRole.ADMIN ? 'CLIENTS' : 'ACCOUNT_OVERVIEW')}
-                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#2A4158] hover:bg-[#F2F6FB] flex items-center gap-2.5"
+                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#263746] hover:bg-[#F3F7FB] flex items-center gap-2.5"
                   >
-                    <Landmark size={14} className="text-slate-400" />
+                    <Landmark size={14} className="text-[#4A90C6]" />
                     <span>{user.role === UserRole.ADMIN ? 'Client Monitor' : 'Account Overview'}</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSelectNav('SECURITY')}
-                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#2A4158] hover:bg-[#F2F6FB] flex items-center gap-2.5"
+                    className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#263746] hover:bg-[#F3F7FB] flex items-center gap-2.5"
                   >
-                    <ShieldCheck size={14} className="text-slate-400" />
+                    <ShieldCheck size={14} className="text-[#4A90C6]" />
                     <span>Security Centre</span>
                   </button>
-                  <div className="border-t border-slate-100 mt-1 pt-1">
+                  <div className="border-t border-[#E2EAF1] mt-1 pt-1">
                     <button
                       type="button"
                       onClick={() => {
@@ -328,7 +328,7 @@ export const Layout: React.FC<{
         </main>
 
         {/* Mobile Bottom Tab Bar */}
-        <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-200 px-2 h-16 grid grid-cols-4 items-center">
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-[#E2EAF1] px-2 h-16 grid grid-cols-4 items-center">
           {(user.role === UserRole.ADMIN
             ? [
                 { id: 'DASHBOARD' as NavSection, icon: <LayoutDashboard size={18} />, label: 'Overview' },
@@ -350,7 +350,7 @@ export const Layout: React.FC<{
                 type="button"
                 onClick={() => handleSelectNav(tab.id)}
                 className={`flex flex-col items-center justify-center gap-1 min-h-[44px] rounded-xl transition-colors ${
-                  isActive ? 'text-[#2B629B] font-semibold' : 'text-slate-500 hover:text-[#1C3D5A]'
+                  isActive ? 'text-[#28658F] bg-[#DCEAF5]/60 font-semibold' : 'text-[#68798A] hover:text-[#263746]'
                 }`}
               >
                 {tab.icon}

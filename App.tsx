@@ -266,11 +266,11 @@ const LoginPage: React.FC = () => {
   const activeShowcase = LOGIN_SHOWCASE_TABS[activeInfoTab];
 
   return (
-    <div className="min-h-screen bg-[#F2F6FB] text-[#2A4158] flex flex-col">
+    <div className="min-h-screen bg-[#F3F7FB] text-[#263746] flex flex-col">
       {ToastContainer}
 
       {/* Top Navigation Bar (3-zone institutional contract) */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
+      <header className="bg-white border-b border-[#E2EAF1] sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
           <BrandLogo variant="light" size="md" />
 
@@ -282,8 +282,8 @@ const LoginPage: React.FC = () => {
                 onClick={() => setActiveInfoTab(tab)}
                 className={`text-sm font-medium whitespace-nowrap shrink-0 transition-colors py-1 border-b-2 ${
                   activeInfoTab === tab
-                    ? 'text-[#1C3D5A] border-[#E31B23] font-semibold'
-                    : 'text-slate-600 border-transparent hover:text-[#1C3D5A]'
+                    ? 'text-[#28658F] border-[#E31B23] font-semibold'
+                    : 'text-[#68798A] border-transparent hover:text-[#28658F]'
                 }`}
               >
                 {tab.charAt(0) + tab.slice(1).toLowerCase()}
@@ -294,7 +294,7 @@ const LoginPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveInfoTab('SUPPORT')}
-            className="bg-[#2B629B] hover:bg-[#235282] text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0"
+            className="bg-[#367EAF] hover:bg-[#28658F] text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0"
           >
             Client Support
           </button>
@@ -306,38 +306,38 @@ const LoginPage: React.FC = () => {
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Secure Sign-In Card */}
           <div className="lg:col-span-5">
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="mb-6">
                 <p className="text-xs font-semibold text-[#E31B23] uppercase tracking-wider">Online Banking</p>
-                <h1 className="text-2xl sm:text-3xl font-display font-bold text-[#1C3D5A] mt-1">
+                <h1 className="text-2xl sm:text-3xl font-display font-bold text-[#28658F] mt-1">
                   Sign in to UsDigital-<span className="text-[#E31B23]">BMU</span>
                 </h1>
-                <p className="text-sm text-slate-500 mt-1.5">
+                <p className="text-sm text-[#68798A] mt-1.5">
                   Access your personal or commercial banking workspace securely.
                 </p>
               </div>
 
               {authError && (
-                <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-900 flex items-start gap-2">
-                  <AlertCircle size={15} className="text-[#E31B23] shrink-0 mt-0.5" />
+                <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-[#263746] flex items-start gap-2">
+                  <AlertCircle size={15} className="text-[#D93025] shrink-0 mt-0.5" />
                   <span>{authError}</span>
                 </div>
               )}
 
               {bootstrapChecked && !isInitialized ? (
                 <form onSubmit={handleBootstrapSetup} className="space-y-4">
-                  <div className="p-3.5 rounded-xl bg-[#F2F6FB] border border-slate-200 text-xs text-[#2A4158] space-y-1">
-                    <p className="font-bold text-[#1C3D5A] flex items-center gap-1.5">
+                  <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] text-xs text-[#263746] space-y-1">
+                    <p className="font-bold text-[#28658F] flex items-center gap-1.5">
                       <KeyRound size={14} className="text-[#E31B23]" />
                       <span>First-Run Credential Setup</span>
                     </p>
-                    <p className="text-slate-600 leading-relaxed">
+                    <p className="text-[#68798A] leading-relaxed">
                       Environment passcodes are not configured yet. Choose a passcode (min 8 characters) to initialize server-side hashed credentials for this preview session.
                     </p>
                   </div>
 
                   <div>
-                    <label htmlFor="setup-passcode" className="text-xs font-semibold text-[#2A4158] block mb-1">
+                    <label htmlFor="setup-passcode" className="text-xs font-semibold text-[#263746] block mb-1">
                       Choose Initial Passcode
                     </label>
                     <input
@@ -348,12 +348,12 @@ const LoginPage: React.FC = () => {
                       value={setupPasscode}
                       onChange={e => setSetupPasscode(e.target.value)}
                       placeholder="Minimum 8 characters"
-                      className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#1C3D5A] focus:border-[#2B629B] outline-none"
+                      className="w-full bg-white border border-[#E2EAF1] rounded-xl px-4 py-3 text-sm text-[#263746] focus:border-[#4A90C6] outline-none"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="setup-confirm" className="text-xs font-semibold text-[#2A4158] block mb-1">
+                    <label htmlFor="setup-confirm" className="text-xs font-semibold text-[#263746] block mb-1">
                       Confirm Passcode
                     </label>
                     <input
@@ -364,14 +364,14 @@ const LoginPage: React.FC = () => {
                       value={setupConfirm}
                       onChange={e => setSetupConfirm(e.target.value)}
                       placeholder="Re-enter passcode"
-                      className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#1C3D5A] focus:border-[#2B629B] outline-none"
+                      className="w-full bg-white border border-[#E2EAF1] rounded-xl px-4 py-3 text-sm text-[#263746] focus:border-[#4A90C6] outline-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={setupLoading}
-                    className="w-full bg-[#2B629B] hover:bg-[#235282] disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
+                    className="w-full bg-[#367EAF] hover:bg-[#28658F] disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
                   >
                     {setupLoading ? 'Initializing...' : 'Initialize Secure Access'}
                   </button>
@@ -379,7 +379,7 @@ const LoginPage: React.FC = () => {
               ) : (
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="login-userid" className="text-xs font-semibold text-[#2A4158] block">
+                    <label htmlFor="login-userid" className="text-xs font-semibold text-[#263746] block">
                       Username or Email
                     </label>
                     <input
@@ -389,13 +389,13 @@ const LoginPage: React.FC = () => {
                       autoComplete="username"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#1C3D5A] focus:border-[#2B629B] focus:ring-2 focus:ring-[#2B629B]/15 outline-none transition-all"
+                      className="w-full bg-white border border-[#E2EAF1] rounded-xl px-4 py-3 text-sm text-[#263746] focus:border-[#4A90C6] focus:ring-2 focus:ring-[#4A90C6]/20 outline-none transition-all"
                       placeholder="Enter username or email"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="login-password" className="text-xs font-semibold text-[#2A4158] block">
+                    <label htmlFor="login-password" className="text-xs font-semibold text-[#263746] block">
                       Password
                     </label>
                     <div className="relative">
@@ -406,13 +406,13 @@ const LoginPage: React.FC = () => {
                         autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 pr-11 text-sm text-[#1C3D5A] focus:border-[#2B629B] focus:ring-2 focus:ring-[#2B629B]/15 outline-none transition-all"
+                        className="w-full bg-white border border-[#E2EAF1] rounded-xl px-4 py-3 pr-11 text-sm text-[#263746] focus:border-[#4A90C6] focus:ring-2 focus:ring-[#4A90C6]/20 outline-none transition-all"
                         placeholder="Enter password"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(prev => !prev)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#1C3D5A] p-1"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#68798A] hover:text-[#28658F] p-1"
                         aria-label={showPassword ? 'Hide password' : 'Show password'}
                       >
                         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -421,12 +421,12 @@ const LoginPage: React.FC = () => {
                   </div>
 
                   <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-                    <label className="inline-flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
+                    <label className="inline-flex items-center gap-2 text-xs text-[#68798A] cursor-pointer select-none">
                       <input
                         type="checkbox"
                         checked={rememberId}
                         onChange={e => setRememberId(e.target.checked)}
-                        className="rounded border-slate-300 text-[#1C3D5A] focus:ring-[#2B629B]"
+                        className="rounded border-[#E2EAF1] text-[#367EAF] focus:ring-[#4A90C6]"
                       />
                       <span>Remember username</span>
                     </label>
@@ -438,7 +438,7 @@ const LoginPage: React.FC = () => {
                         setForgotIdentifier(username);
                         setForgotOpen(true);
                       }}
-                      className="text-xs font-semibold text-[#2B629B] hover:text-[#E31B23] hover:underline flex items-center gap-1"
+                      className="text-xs font-semibold text-[#28658F] hover:text-[#E31B23] hover:underline flex items-center gap-1"
                     >
                       <HelpCircle size={13} />
                       <span>Forgot password?</span>
@@ -448,7 +448,7 @@ const LoginPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#2B629B] hover:bg-[#235282] disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+                    className="w-full bg-[#367EAF] hover:bg-[#28658F] disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
                   >
                     <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
                     {!loading && <ArrowRight size={17} />}
@@ -456,17 +456,17 @@ const LoginPage: React.FC = () => {
 
                   <div className="relative py-1">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-slate-200" />
+                      <div className="w-full border-t border-[#E2EAF1]" />
                     </div>
                     <div className="relative flex justify-center text-[11px] uppercase">
-                      <span className="bg-white px-2.5 text-slate-400 font-semibold">Biometric Option</span>
+                      <span className="bg-white px-2.5 text-[#68798A] font-semibold">Biometric Option</span>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setFaceIdOpen(true)}
-                    className="w-full bg-white hover:bg-[#F2F6FB] border border-slate-300 text-[#1C3D5A] font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm"
+                    className="w-full bg-white hover:bg-[#F3F7FB] border border-[#E2EAF1] text-[#263746] font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm"
                   >
                     <ScanFace size={17} className="text-[#E31B23]" />
                     <span>Login with Face ID (Prototype)</span>
@@ -474,19 +474,19 @@ const LoginPage: React.FC = () => {
                 </form>
               )}
 
-              <div className="mt-6 pt-5 border-t border-slate-200 flex items-center justify-between gap-2 text-xs text-slate-500">
+              <div className="mt-6 pt-5 border-t border-[#E2EAF1] flex items-center justify-between gap-2 text-xs text-[#68798A]">
                 <span className="flex items-center gap-1.5">
                   <Lock size={13} className="text-[#16865B]" />
                   <span>Protected Session Access</span>
                 </span>
-                <span className="font-mono text-[11px] text-slate-400">DEMO ENVIRONMENT</span>
+                <span className="font-mono text-[11px] text-[#68798A]">DEMO ENVIRONMENT</span>
               </div>
             </div>
           </div>
 
           {/* Right: Institutional Digital Banking Showcase */}
           <div className="lg:col-span-7 space-y-5">
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="flex flex-wrap gap-2 mb-5 md:hidden">
                 {(['PERSONAL', 'BUSINESS', 'SECURITY', 'SUPPORT'] as LoginInfoTab[]).map(tab => (
                   <button
@@ -494,7 +494,7 @@ const LoginPage: React.FC = () => {
                     type="button"
                     onClick={() => setActiveInfoTab(tab)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${
-                      activeInfoTab === tab ? 'bg-[#2B629B] text-white' : 'bg-[#F2F6FB] text-slate-600'
+                      activeInfoTab === tab ? 'bg-[#367EAF] text-white' : 'bg-[#F3F7FB] text-[#68798A]'
                     }`}
                   >
                     {tab.charAt(0) + tab.slice(1).toLowerCase()}
@@ -507,14 +507,14 @@ const LoginPage: React.FC = () => {
                   <p className="text-xs font-semibold text-[#E31B23] uppercase tracking-wider">
                     UsDigital-BMU Retail Platform
                   </p>
-                  <h2 className="text-2xl font-display font-bold text-[#1C3D5A] leading-snug">
+                  <h2 className="text-2xl font-display font-bold text-[#263746] leading-snug">
                     {activeShowcase.heading}
                   </h2>
-                  <p className="text-sm text-slate-600 leading-relaxed">{activeShowcase.description}</p>
+                  <p className="text-sm text-[#68798A] leading-relaxed">{activeShowcase.description}</p>
 
                   <ul className="space-y-2.5 pt-1">
                     {activeShowcase.points.map((pt, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#2A4158]">
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#263746]">
                         <CheckCircle2 size={16} className="text-[#16865B] shrink-0 mt-0.5" />
                         <span>{pt}</span>
                       </li>
@@ -527,16 +527,16 @@ const LoginPage: React.FC = () => {
                   <div className="bank-card-navy rounded-2xl p-5 text-white space-y-5">
                     <div className="flex items-center justify-between">
                       <BrandLogo variant="dark" size="sm" />
-                      <Landmark size={18} className="text-blue-100" />
+                      <Landmark size={18} className="text-[#DCEAF5]" />
                     </div>
 
                     <div className="space-y-1">
-                      <p className="text-[11px] text-blue-100 uppercase tracking-wider">Account Security</p>
+                      <p className="text-[11px] text-[#DCEAF5] uppercase tracking-wider">Account Security</p>
                       <p className="text-base font-display font-bold">Zero-Trust Isolation</p>
                     </div>
 
-                    <div className="bg-white rounded-xl p-3.5 text-[#1C3D5A] flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-500">Session</span>
+                    <div className="bg-white rounded-xl p-3.5 text-[#263746] flex items-center justify-between">
+                      <span className="text-xs font-medium text-[#68798A]">Session</span>
                       <span className="text-xs font-bold text-[#16865B] flex items-center gap-1">
                         <ShieldCheck size={14} />
                         <span>Server-Verified</span>
@@ -547,29 +547,29 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-600">
-              <div className="bg-white border border-slate-200 rounded-xl p-4">
-                <Landmark size={16} className="text-[#1C3D5A] mb-2" />
-                <p className="font-semibold text-[#1C3D5A]">Personal Banking</p>
-                <p className="text-slate-500 mt-0.5">Checking balances, statements & support</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#68798A]">
+              <div className="bg-white border border-[#E2EAF1] rounded-xl p-4">
+                <Landmark size={16} className="text-[#4A90C6] mb-2" />
+                <p className="font-semibold text-[#263746]">Personal Banking</p>
+                <p className="text-[#68798A] mt-0.5">Checking balances, statements & support</p>
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl p-4">
-                <Building2 size={16} className="text-[#1C3D5A] mb-2" />
-                <p className="font-semibold text-[#1C3D5A]">Commercial Treasury</p>
-                <p className="text-slate-500 mt-0.5">Operating & reserve sub-accounts</p>
+              <div className="bg-white border border-[#E2EAF1] rounded-xl p-4">
+                <Building2 size={16} className="text-[#4A90C6] mb-2" />
+                <p className="font-semibold text-[#263746]">Commercial Treasury</p>
+                <p className="text-[#68798A] mt-0.5">Operating & reserve sub-accounts</p>
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl p-4">
+              <div className="bg-white border border-[#E2EAF1] rounded-xl p-4">
                 <ShieldCheck size={16} className="text-[#E31B23] mb-2" />
-                <p className="font-semibold text-[#1C3D5A]">Security Centre</p>
-                <p className="text-slate-500 mt-0.5">Hold protection & biometric simulation</p>
+                <p className="font-semibold text-[#263746]">Security Centre</p>
+                <p className="text-[#68798A] mt-0.5">Hold protection & biometric simulation</p>
               </div>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="bg-white border-t border-slate-200 py-5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <footer className="bg-white border-t border-[#E2EAF1] py-5 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#68798A]">
           <p>UsDigital-BMU · Retail & Commercial Digital Banking Prototype</p>
           <p>Demonstration interface — sample records are clearly marked DEMO</p>
         </div>
@@ -578,28 +578,28 @@ const LoginPage: React.FC = () => {
       {/* Forgot Password Modal */}
       <Modal title="Password Recovery" isOpen={isForgotOpen} onClose={() => setForgotOpen(false)}>
         <form onSubmit={handleForgotSubmit} className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-[#68798A] leading-relaxed">
             Enter your enrolled username or email address. If a matching profile exists, recovery instructions will be queued through your support channel.
           </p>
           <div>
-            <label className="text-xs font-semibold text-[#2A4158] block mb-1">Username or Email</label>
+            <label className="text-xs font-semibold text-[#263746] block mb-1">Username or Email</label>
             <input
               type="text"
               required
               value={forgotIdentifier}
               onChange={e => setForgotIdentifier(e.target.value)}
               placeholder="Enter username or email"
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:border-[#2B629B]"
+              className="w-full bg-white border border-[#E2EAF1] rounded-xl p-2.5 text-sm outline-none focus:border-[#4A90C6]"
             />
           </div>
           {forgotResult && (
-            <div className="p-3 rounded-xl bg-[#F2F6FB] border border-slate-200 text-xs text-[#1C3D5A]">
+            <div className="p-3 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] text-xs text-[#263746]">
               {forgotResult}
             </div>
           )}
           <button
             type="submit"
-            className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-2.5 rounded-xl text-sm"
+            className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-2.5 rounded-xl text-sm"
           >
             Request Recovery Assistance
           </button>

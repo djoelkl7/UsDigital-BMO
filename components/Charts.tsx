@@ -21,16 +21,16 @@ export const FinancialGrowthChart: React.FC<{ data: any[] }> = ({ data }) => {
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="morningBlueBalanceArea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#2B629B" stopOpacity={0.24} />
-              <stop offset="95%" stopColor="#2B629B" stopOpacity={0} />
+              <stop offset="5%" stopColor="#4A90C6" stopOpacity={0.28} />
+              <stop offset="95%" stopColor="#4A90C6" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-          <XAxis dataKey="name" stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} />
-          <YAxis stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E2EAF1" vertical={false} />
+          <XAxis dataKey="name" stroke="#68798A" fontSize={12} tickLine={false} axisLine={false} />
+          <YAxis stroke="#68798A" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#2B629B',
+              backgroundColor: '#28658F',
               border: 'none',
               borderRadius: '10px',
               color: '#FFFFFF',
@@ -41,7 +41,7 @@ export const FinancialGrowthChart: React.FC<{ data: any[] }> = ({ data }) => {
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#2B629B"
+            stroke="#4A90C6"
             fillOpacity={1}
             fill="url(#morningBlueBalanceArea)"
             strokeWidth={2.5}
@@ -60,11 +60,11 @@ export const YearlyStatsBarChart: React.FC<{
     <div className="h-[190px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 4, left: 4, bottom: 0 }}>
-          <XAxis dataKey="name" stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
+          <XAxis dataKey="name" stroke="#68798A" fontSize={11} tickLine={false} axisLine={false} />
           <Tooltip
-            cursor={{ fill: 'rgba(43, 98, 155, 0.06)' }}
+            cursor={{ fill: 'rgba(74, 144, 198, 0.08)' }}
             contentStyle={{
-              backgroundColor: '#2B629B',
+              backgroundColor: '#28658F',
               border: 'none',
               borderRadius: '10px',
               color: '#FFFFFF',
@@ -76,7 +76,7 @@ export const YearlyStatsBarChart: React.FC<{
             {data.map((entry, idx) => (
               <Cell
                 key={`bar-${idx}`}
-                fill={entry.active || idx === activeIndex ? '#2B629B' : '#CBD5E1'}
+                fill={entry.active || idx === activeIndex ? '#4A90C6' : '#DCEAF5'}
               />
             ))}
           </Bar>
@@ -87,7 +87,7 @@ export const YearlyStatsBarChart: React.FC<{
 };
 
 export const SpendingPieChart: React.FC<{ data: any[] }> = ({ data }) => {
-  const COLORS = ['#2B629B', '#3D7AB8', '#16865B', '#D99A20', '#64748B'];
+  const COLORS = ['#4A90C6', '#367EAF', '#16865B', '#D99A20', '#68798A'];
   return (
     <div className="h-[240px] w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -107,7 +107,7 @@ export const SpendingPieChart: React.FC<{ data: any[] }> = ({ data }) => {
           </Pie>
           <Tooltip
             contentStyle={{
-              backgroundColor: '#2B629B',
+              backgroundColor: '#28658F',
               border: 'none',
               borderRadius: '10px',
               color: '#FFFFFF',
@@ -125,12 +125,12 @@ export const CashFlowChart: React.FC<{ data: any[] }> = ({ data }) => {
     <div className="h-[260px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-          <XAxis dataKey="name" stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} />
-          <YAxis stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E2EAF1" vertical={false} />
+          <XAxis dataKey="name" stroke="#68798A" fontSize={12} tickLine={false} axisLine={false} />
+          <YAxis stroke="#68798A" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#2B629B',
+              backgroundColor: '#28658F',
               border: 'none',
               borderRadius: '10px',
               color: '#FFFFFF',
@@ -138,7 +138,7 @@ export const CashFlowChart: React.FC<{ data: any[] }> = ({ data }) => {
             }}
           />
           <Bar dataKey="income" fill="#16865B" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="expense" fill="#2B629B" radius={[6, 6, 0, 0]} />
+          <Bar dataKey="expense" fill="#4A90C6" radius={[6, 6, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

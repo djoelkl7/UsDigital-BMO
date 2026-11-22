@@ -15,16 +15,16 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
 
   const icons = {
     success: <CheckCircle size={18} className="text-[#16865B] shrink-0" />,
-    error: <XCircle size={18} className="text-[#E31B23] shrink-0" />,
-    info: <Info size={18} className="text-[#2B629B] shrink-0" />,
+    error: <XCircle size={18} className="text-[#D93025] shrink-0" />,
+    info: <Info size={18} className="text-[#4A90C6] shrink-0" />,
     warning: <AlertTriangle size={18} className="text-[#D99A20] shrink-0" />
   };
 
   const styles = {
-    success: 'bg-white border-emerald-200 text-[#1C3D5A]',
-    error: 'bg-white border-red-200 text-[#1C3D5A]',
-    info: 'bg-white border-slate-200 text-[#1C3D5A]',
-    warning: 'bg-white border-amber-200 text-[#1C3D5A]'
+    success: 'bg-white border-emerald-200 text-[#263746]',
+    error: 'bg-white border-red-200 text-[#263746]',
+    info: 'bg-white border-[#DCEAF5] text-[#263746]',
+    warning: 'bg-white border-amber-200 text-[#263746]'
   };
 
   return (
@@ -38,7 +38,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
       <button
         type="button"
         onClick={onClose}
-        className="ml-1 p-1 rounded-lg text-slate-400 hover:text-[#1C3D5A] hover:bg-slate-100 transition-colors"
+        className="ml-1 p-1 rounded-lg text-[#68798A] hover:text-[#263746] hover:bg-[#F3F7FB] transition-colors"
         aria-label="Dismiss notification"
       >
         <X size={15} />

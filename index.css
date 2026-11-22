@@ -1,4 +1,4 @@
-/* UsDigital-BMU Retail Banking Global Styles */
+/* UsDigital-BMU Retail Banking Global Styles — Morning Blue Design System */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,21 +7,25 @@
   --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-  --morning-blue-primary: #2B629B;
-  --morning-blue-secondary: #3D7AB8;
-  --morning-blue-ink: #1C3D5A;
+  --morning-blue-primary: #4A90C6;
+  --morning-blue-secondary: #367EAF;
+  --morning-blue-deep: #28658F;
   --brand-red: #E31B23;
-  --canvas-bg: #F2F6FB;
-  --surface-bg: #FFFFFF;
-  --text-main: #2A4158;
+  --white: #FFFFFF;
+  --soft-blue-bg: #F3F7FB;
+  --pale-blue: #DCEAF5;
+  --slate-text: #263746;
+  --secondary-text: #68798A;
+  --border-color: #E2EAF1;
   --status-success: #16865B;
   --status-warning: #D99A20;
+  --status-error: #D93025;
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--canvas-bg);
-  color: var(--text-main);
+  background: var(--soft-blue-bg);
+  color: var(--slate-text);
   overflow-x: hidden;
 }
 
@@ -33,20 +37,25 @@ h1, h2, h3, h4, .font-display {
   font-variant-numeric: tabular-nums;
 }
 
+:focus-visible {
+  outline: 2px solid var(--morning-blue-deep);
+  outline-offset: 2px;
+}
+
 .bank-surface {
-  background: #FFFFFF;
-  border: 1px solid #DCE6F2;
-  box-shadow: 0 1px 3px rgba(43, 98, 155, 0.06);
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(54, 126, 175, 0.08);
 }
 
 .bank-card-navy {
-  background-color: #2B629B;
-  background-image: linear-gradient(135deg, #2B629B 0%, #3D7AB8 100%);
+  background-color: var(--morning-blue-secondary);
+  background-image: linear-gradient(135deg, #367EAF 0%, #4A90C6 100%);
 }
 
 .keypad-pattern {
-  background-color: #F2F6FB;
-  background-image: radial-gradient(rgba(43, 98, 155, 0.05) 1px, transparent 1px);
+  background-color: var(--soft-blue-bg);
+  background-image: radial-gradient(rgba(74, 144, 198, 0.08) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -77,14 +86,14 @@ h1, h2, h3, h4, .font-display {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F2F6FB;
+  background: var(--soft-blue-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: var(--pale-blue);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: var(--morning-blue-primary);
 }

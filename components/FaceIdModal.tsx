@@ -272,19 +272,19 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-[#1C3D5A]/55 backdrop-blur-xs"
+        className="absolute inset-0 bg-[#263746]/55 backdrop-blur-xs"
         onClick={() => {
           stopCameraTracks();
           onClose();
         }}
       />
-      <div className="relative bg-white w-full max-w-md rounded-2xl border border-slate-200 shadow-2xl overflow-hidden animate-scale-in">
-        <div className="px-6 py-4 bg-[#2B629B] text-white flex items-center justify-between">
+      <div className="relative bg-white w-full max-w-md rounded-2xl border border-[#E2EAF1] shadow-2xl overflow-hidden animate-scale-in">
+        <div className="px-6 py-4 bg-[#367EAF] text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <ScanFace size={20} className="text-white" />
             <div>
               <h3 className="text-base font-display font-bold">Login with Face ID</h3>
-              <p className="text-[11px] text-blue-100">Prototype Biometric Camera Simulation</p>
+              <p className="text-[11px] text-[#DCEAF5]">Prototype Biometric Camera Simulation</p>
             </div>
           </div>
           <button
@@ -293,7 +293,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
               stopCameraTracks();
               onClose();
             }}
-            className="p-2 rounded-lg text-blue-100 hover:text-white hover:bg-white/15 transition-colors"
+            className="p-2 rounded-lg text-[#DCEAF5] hover:text-white hover:bg-white/15 transition-colors"
             aria-label="Close Face ID modal"
           >
             <X size={18} />
@@ -301,25 +301,25 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
         </div>
 
         <div className="p-6 space-y-4">
-          <div className="p-3 rounded-xl bg-[#F2F6FB] border border-slate-200 text-xs text-[#2A4158] leading-relaxed">
-            <p className="font-semibold text-[#1C3D5A] flex items-center gap-1.5">
+          <div className="p-3 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] text-xs text-[#263746] leading-relaxed">
+            <p className="font-semibold text-[#28658F] flex items-center gap-1.5">
               <ShieldAlert size={14} className="text-[#D99A20] shrink-0" />
               <span>Prototype Disclosure</span>
             </p>
-            <p className="mt-1 text-slate-600">
+            <p className="mt-1 text-[#68798A]">
               Face detection confirms live subject presence locally in your browser and never saves or transmits camera frames. It is a UI simulation and requires your account passcode authorization.
             </p>
           </div>
 
           {errorMessage && (
-            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2">
-              <AlertTriangle size={15} className="text-[#E31B23] shrink-0 mt-0.5" />
+            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-[#263746] flex items-start gap-2">
+              <AlertTriangle size={15} className="text-[#D93025] shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           {/* Camera Preview Box */}
-          <div className="relative aspect-[4/3] w-full rounded-xl bg-[#2B629B] overflow-hidden border border-slate-300 flex items-center justify-center">
+          <div className="relative aspect-[4/3] w-full rounded-xl bg-[#367EAF] overflow-hidden border border-[#E2EAF1] flex items-center justify-center">
             <video
               ref={videoRef}
               playsInline
@@ -336,7 +336,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
                   <Camera size={24} className="text-white" />
                 </div>
                 <p className="text-sm font-semibold">Camera stays off until you start</p>
-                <p className="text-xs text-blue-100">Authorize below to start face detection</p>
+                <p className="text-xs text-[#DCEAF5]">Authorize below to start face detection</p>
               </div>
             )}
 
@@ -349,8 +349,8 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
 
             {stage === 'SCANNING' && (
               <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
-                <div className="w-40 h-48 rounded-full border-2 border-dashed border-white/85 shadow-[0_0_0_9999px_rgba(43,98,155,0.45)] flex items-end justify-center pb-3">
-                  <span className="text-[11px] font-mono bg-[#2B629B]/90 text-white px-2.5 py-0.5 rounded">
+                <div className="w-40 h-48 rounded-full border-2 border-dashed border-white/85 shadow-[0_0_0_9999px_rgba(40,101,143,0.45)] flex items-end justify-center pb-3">
+                  <span className="text-[11px] font-mono bg-[#28658F]/90 text-white px-2.5 py-0.5 rounded">
                     {detectionConfidence}%
                   </span>
                 </div>
@@ -366,17 +366,17 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
             )}
 
             {(stage === 'PERMISSION_DENIED' || stage === 'ERROR') && (
-              <div className="absolute inset-0 bg-[#3D7AB8] flex flex-col items-center justify-center text-white p-5 text-center space-y-2">
+              <div className="absolute inset-0 bg-[#4A90C6] flex flex-col items-center justify-center text-white p-5 text-center space-y-2">
                 <Lock size={30} className="text-white" />
                 <p className="text-sm font-semibold">Camera Unavailable</p>
-                <p className="text-xs text-blue-100">Use standard username and password login instead.</p>
+                <p className="text-xs text-[#DCEAF5]">Use standard username and password login instead.</p>
               </div>
             )}
           </div>
 
           <form onSubmit={handleStartBiometricScan} className="space-y-3">
             <div>
-              <label className="text-xs font-semibold text-[#2A4158] block mb-1">Username or Email</label>
+              <label className="text-xs font-semibold text-[#263746] block mb-1">Username or Email</label>
               <input
                 type="text"
                 required
@@ -384,12 +384,12 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
                 onChange={e => setUsername(e.target.value)}
                 disabled={stage === 'SCANNING' || stage === 'FACE_DETECTED'}
                 placeholder="Enter username"
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-[#1C3D5A] focus:border-[#2B629B] outline-none"
+                className="w-full bg-white border border-[#E2EAF1] rounded-xl px-3.5 py-2.5 text-sm text-[#263746] focus:border-[#4A90C6] outline-none"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-[#2A4158] block mb-1">
+              <label className="text-xs font-semibold text-[#263746] block mb-1">
                 Account Passcode Authorization
               </label>
               <div className="relative">
@@ -400,12 +400,12 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
                   onChange={e => setPasscode(e.target.value)}
                   disabled={stage === 'SCANNING' || stage === 'FACE_DETECTED'}
                   placeholder="Verify passcode to authorize Face ID"
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 pr-10 text-sm text-[#1C3D5A] focus:border-[#2B629B] outline-none"
+                  className="w-full bg-white border border-[#E2EAF1] rounded-xl px-3.5 py-2.5 pr-10 text-sm text-[#263746] focus:border-[#4A90C6] outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPasscode(prev => !prev)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#2B629B] p-1"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#68798A] hover:text-[#28658F] p-1"
                   aria-label={showPasscode ? 'Hide passcode' : 'Show passcode'}
                 >
                   {showPasscode ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -417,7 +417,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
               <button
                 type="submit"
                 disabled={stage === 'SCANNING' || stage === 'REQUESTING_CAMERA' || stage === 'FACE_DETECTED'}
-                className="flex-1 bg-[#2B629B] hover:bg-[#235282] disabled:opacity-60 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-[#367EAF] hover:bg-[#28658F] disabled:opacity-60 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
               >
                 <Camera size={16} />
                 <span>
@@ -434,7 +434,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
                   stopCameraTracks();
                   onClose();
                 }}
-                className="px-4 py-2.5 border border-slate-300 hover:bg-[#F2F6FB] text-[#2A4158] font-semibold rounded-xl text-sm transition-colors"
+                className="px-4 py-2.5 border border-[#E2EAF1] hover:bg-[#F3F7FB] text-[#263746] font-semibold rounded-xl text-sm transition-colors"
               >
                 Use Password
               </button>

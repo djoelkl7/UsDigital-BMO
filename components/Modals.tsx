@@ -45,19 +45,19 @@ export const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, children, 
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#1C3D5A]/55 backdrop-blur-xs" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#263746]/55 backdrop-blur-xs" onClick={onClose} />
       <div
-        className={`relative bg-white w-full ${maxWidth} rounded-2xl overflow-hidden animate-scale-in border border-slate-200 shadow-2xl flex flex-col max-h-[90vh] text-[#2A4158]`}
+        className={`relative bg-white w-full ${maxWidth} rounded-2xl overflow-hidden animate-scale-in border border-[#E2EAF1] shadow-2xl flex flex-col max-h-[90vh] text-[#263746]`}
       >
-        <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-white shrink-0">
-          <h3 className="text-base md:text-lg font-display font-bold text-[#1C3D5A] flex items-center gap-2">
+        <div className="px-6 py-4 border-b border-[#E2EAF1] flex justify-between items-center bg-white shrink-0">
+          <h3 className="text-base md:text-lg font-display font-bold text-[#263746] flex items-center gap-2">
             <ShieldCheck size={18} className="text-[#E31B23]" />
             <span>{title}</span>
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#1C3D5A] min-h-[40px] min-w-[40px] flex items-center justify-center"
+            className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#263746] min-h-[40px] min-w-[40px] flex items-center justify-center"
             aria-label="Close modal"
           >
             <X size={18} />
@@ -152,7 +152,7 @@ export const UserProfileDetailModal: React.FC<{
           </div>
         )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-[#F2F6FB] rounded-xl text-xs font-semibold border border-slate-200">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-[#F3F7FB] rounded-xl text-xs font-semibold border border-[#E2EAF1]">
           {[
             { id: 'DOSSIER', icon: <UserIcon size={14} />, label: 'Dossier' },
             { id: 'PASSPORT', icon: <Globe size={14} />, label: 'ID Record' },
@@ -164,7 +164,7 @@ export const UserProfileDetailModal: React.FC<{
               type="button"
               onClick={() => setActiveTab(tab.id as any)}
               className={`py-2.5 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap ${
-                activeTab === tab.id ? 'bg-[#2B629B] text-white' : 'text-slate-600 hover:text-[#1C3D5A]'
+                activeTab === tab.id ? 'bg-[#367EAF] text-white' : 'text-slate-600 hover:text-[#263746]'
               }`}
             >
               {tab.icon}
@@ -175,14 +175,14 @@ export const UserProfileDetailModal: React.FC<{
 
         {activeTab === 'DOSSIER' && (
           <div className="space-y-5">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 p-5 bg-[#F2F6FB] rounded-xl border border-slate-200">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 p-5 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
               <ProfileAvatar src={user.passportUrl} name={user.name} sizeClass="w-24 h-24" className="border-2 border-white shadow-sm" />
 
               <div className="flex-1 text-center sm:text-left">
-                <h3 className="text-xl font-display font-bold text-[#1C3D5A]">{user.name}</h3>
+                <h3 className="text-xl font-display font-bold text-[#263746]">{user.name}</h3>
                 <p className="text-slate-500 font-mono text-xs mt-0.5">@{user.username}</p>
                 <div className="mt-2.5 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs text-slate-600">
-                  <span className="font-semibold text-[#2B629B]">{user.accountTypeLabel || 'Personal Banking'}</span>
+                  <span className="font-semibold text-[#28658F]">{user.accountTypeLabel || 'Personal Banking'}</span>
                   <span aria-hidden="true">·</span>
                   <span className="font-mono">{user.currency || 'USD'}</span>
                   <span aria-hidden="true">·</span>
@@ -204,12 +204,12 @@ export const UserProfileDetailModal: React.FC<{
               </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-200 text-xs">
+            <div className="bg-white rounded-xl border border-[#E2EAF1] divide-y divide-slate-200 text-xs">
               <div className="flex justify-between items-center p-4">
                 <span className="text-slate-500 flex items-center gap-2">
                   <Mail size={14} /> Registry Email
                 </span>
-                <span className="font-mono text-[#1C3D5A] font-medium">
+                <span className="font-mono text-[#263746] font-medium">
                   {user.email || `${user.username.toLowerCase()}@usdigital-bmu.demo`}
                 </span>
               </div>
@@ -217,13 +217,13 @@ export const UserProfileDetailModal: React.FC<{
                 <span className="text-slate-500 flex items-center gap-2">
                   <IDIcon size={14} /> Reference Identifier
                 </span>
-                <span className="font-mono text-[#2B629B] font-semibold">{user.idNumber || 'USB-DEMO-774920-P'}</span>
+                <span className="font-mono text-[#28658F] font-semibold">{user.idNumber || 'USB-DEMO-774920-P'}</span>
               </div>
               <div className="flex justify-between items-center p-4">
                 <span className="text-slate-500 flex items-center gap-2">
                   <FileText size={14} /> Demonstration Balance
                 </span>
-                <span className="font-bold text-sm text-[#1C3D5A] font-mono tabular-nums">
+                <span className="font-bold text-sm text-[#263746] font-mono tabular-nums">
                   ${user.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })} {user.currency || 'USD'}
                 </span>
               </div>
@@ -232,7 +232,7 @@ export const UserProfileDetailModal: React.FC<{
         )}
 
         {activeTab === 'PASSPORT' && (
-          <div className="p-6 rounded-2xl bg-[#2B629B] text-white border border-[#3D7AB8]">
+          <div className="p-6 rounded-2xl bg-[#367EAF] text-white border border-[#4A90C6]">
             <div className="text-center pb-4 border-b border-white/10 mb-5">
               <p className="text-[11px] text-slate-300 tracking-[0.2em] uppercase font-semibold">
                 UsDigital-<span className="text-[#E31B23]">BMU</span> Demonstration Record
@@ -244,7 +244,7 @@ export const UserProfileDetailModal: React.FC<{
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
               <div className="flex flex-col items-center">
-                <div className="w-32 h-40 rounded-xl overflow-hidden border border-white/20 bg-[#3D7AB8] relative">
+                <div className="w-32 h-40 rounded-xl overflow-hidden border border-white/20 bg-[#4A90C6] relative">
                   <ProfileAvatar src={user.passportUrl} name={user.name} sizeClass="w-full h-full rounded-none border-0" />
                   <div className="absolute bottom-0 inset-x-0 bg-[#E31B23] text-white text-[10px] font-semibold text-center py-1">
                     DEMO PHOTOGRAPH
@@ -297,12 +297,12 @@ export const UserProfileDetailModal: React.FC<{
                     setGeneratedAvatarUrl(null);
                   }}
                   className={`p-3 rounded-xl border text-left transition-colors flex items-center gap-3 ${
-                    selectedArchetypeId === arch.id ? 'border-[#2B629B] bg-[#F2F6FB]' : 'border-slate-200 bg-white hover:bg-slate-50'
+                    selectedArchetypeId === arch.id ? 'border-[#4A90C6] bg-[#F3F7FB]' : 'border-[#E2EAF1] bg-white hover:bg-slate-50'
                   }`}
                 >
                   <ProfileAvatar src={arch.assetUrl} name={arch.name} sizeClass="w-12 h-12 rounded-lg" />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-xs text-[#1C3D5A] truncate">{arch.name}</p>
+                    <p className="font-semibold text-xs text-[#263746] truncate">{arch.name}</p>
                     <p className="text-[11px] text-slate-500 truncate">{arch.lighting}</p>
                   </div>
                 </button>
@@ -317,32 +317,32 @@ export const UserProfileDetailModal: React.FC<{
                 <button
                   type="button"
                   onClick={handleCopyPrompt}
-                  className="text-xs font-semibold text-[#2B629B] hover:underline flex items-center gap-1"
+                  className="text-xs font-semibold text-[#28658F] hover:underline flex items-center gap-1"
                 >
                   {copiedPrompt ? <Check size={12} /> : <Copy size={12} />}
                   <span>{copiedPrompt ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
-              <div className="p-3 bg-[#F2F6FB] rounded-xl border border-slate-200 font-mono text-[11px] text-[#2A4158]">
+              <div className="p-3 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1] font-mono text-[11px] text-[#263746]">
                 {activePrompt}
               </div>
             </div>
 
             {isGenerating ? (
-              <div className="p-6 bg-[#F2F6FB] rounded-xl border border-slate-200 text-center space-y-3">
-                <RefreshCw size={22} className="animate-spin text-[#1C3D5A] mx-auto" />
-                <p className="text-sm font-semibold text-[#1C3D5A]">
+              <div className="p-6 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1] text-center space-y-3">
+                <RefreshCw size={22} className="animate-spin text-[#263746] mx-auto" />
+                <p className="text-sm font-semibold text-[#263746]">
                   {generationStep === 1 && `Preparing portrait parameters for ${user.name}...`}
                   {generationStep === 2 && `Applying ${selectedArchetype.name}...`}
                   {generationStep === 3 && 'Finalizing portrait...'}
                 </p>
               </div>
             ) : generatedAvatarUrl ? (
-              <div className="p-5 bg-[#F2F6FB] rounded-xl border border-slate-200 space-y-4">
+              <div className="p-5 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1] space-y-4">
                 <div className="flex items-center gap-4">
                   <ProfileAvatar src={generatedAvatarUrl} name={selectedArchetype.name} sizeClass="w-16 h-16 rounded-xl" />
                   <div>
-                    <h4 className="font-bold text-sm text-[#1C3D5A]">{selectedArchetype.name}</h4>
+                    <h4 className="font-bold text-sm text-[#263746]">{selectedArchetype.name}</h4>
                     <p className="text-xs text-slate-600 mt-0.5">{selectedArchetype.attire}</p>
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export const UserProfileDetailModal: React.FC<{
                   <button
                     type="button"
                     onClick={() => handleApplyAvatar(generatedAvatarUrl)}
-                    className="bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5"
+                    className="bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5"
                   >
                     <Check size={15} />
                     <span>Apply to Profile</span>
@@ -358,7 +358,7 @@ export const UserProfileDetailModal: React.FC<{
                   <a
                     href={generatedAvatarUrl}
                     download={`${user.username}-portrait.jpg`}
-                    className="bg-white border border-slate-200 text-[#1C3D5A] font-semibold py-2.5 rounded-xl text-xs hover:bg-slate-50 flex items-center justify-center gap-1.5"
+                    className="bg-white border border-[#E2EAF1] text-[#263746] font-semibold py-2.5 rounded-xl text-xs hover:bg-slate-50 flex items-center justify-center gap-1.5"
                   >
                     <Download size={15} />
                     <span>Download</span>
@@ -369,7 +369,7 @@ export const UserProfileDetailModal: React.FC<{
               <button
                 type="button"
                 onClick={handleGenerateAvatar}
-                className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+                className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
               >
                 <Sparkles size={16} />
                 <span>Preview Studio Portrait</span>
@@ -380,17 +380,17 @@ export const UserProfileDetailModal: React.FC<{
 
         {activeTab === 'PHOTO_STUDIO' && (
           <div className="space-y-5">
-            <div className="relative border-2 border-dashed border-slate-300 hover:border-[#2B629B] rounded-xl p-6 transition-colors flex flex-col items-center justify-center space-y-2 cursor-pointer bg-[#F2F6FB]">
+            <div className="relative border-2 border-dashed border-slate-300 hover:border-[#4A90C6] rounded-xl p-6 transition-colors flex flex-col items-center justify-center space-y-2 cursor-pointer bg-[#F3F7FB]">
               <input
                 type="file"
                 className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 accept="image/*"
                 onChange={handleFileUpload}
               />
-              <div className="p-3 bg-white rounded-full border border-slate-200 text-[#1C3D5A]">
+              <div className="p-3 bg-white rounded-full border border-[#E2EAF1] text-[#263746]">
                 <Upload size={22} />
               </div>
-              <p className="text-xs font-semibold text-[#1C3D5A]">Upload replacement portrait photograph</p>
+              <p className="text-xs font-semibold text-[#263746]">Upload replacement portrait photograph</p>
               <p className="text-[11px] text-slate-500">PNG, JPG, or WebP</p>
             </div>
 
@@ -401,7 +401,7 @@ export const UserProfileDetailModal: React.FC<{
                   type="button"
                   onClick={() => handleApplyAvatar(preset.url)}
                   className={`p-2 rounded-xl border text-center transition-colors ${
-                    user.passportUrl === preset.url ? 'border-[#2B629B] bg-[#F2F6FB]' : 'border-slate-200 hover:bg-slate-50'
+                    user.passportUrl === preset.url ? 'border-[#4A90C6] bg-[#F3F7FB]' : 'border-[#E2EAF1] hover:bg-slate-50'
                   }`}
                 >
                   <div className="w-full aspect-square rounded-lg overflow-hidden mb-2">
@@ -412,7 +412,7 @@ export const UserProfileDetailModal: React.FC<{
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
-                  <p className="text-xs font-semibold truncate text-[#1C3D5A]">{preset.name}</p>
+                  <p className="text-xs font-semibold truncate text-[#263746]">{preset.name}</p>
                 </button>
               ))}
             </div>
@@ -502,9 +502,9 @@ export const UserManagementModal: React.FC<{
   return (
     <Modal title={initialUser ? 'Edit Account Record' : 'Enroll Demonstration Account'} isOpen={isOpen} onClose={onClose} maxWidth="max-w-xl">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex items-center gap-4 p-4 bg-[#F2F6FB] rounded-xl border border-slate-200">
+        <div className="flex items-center gap-4 p-4 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
           <ProfileAvatar src={formData.passportUrl} name={formData.name || 'User'} sizeClass="w-14 h-14" />
-          <label className="cursor-pointer bg-white border border-slate-300 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#1C3D5A] hover:bg-slate-50 transition-colors flex items-center gap-1.5">
+          <label className="cursor-pointer bg-white border border-slate-300 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#263746] hover:bg-slate-50 transition-colors flex items-center gap-1.5">
             <Upload size={14} />
             <span>Upload Photo</span>
             <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
@@ -519,7 +519,7 @@ export const UserManagementModal: React.FC<{
               required
               value={formData.name || ''}
               onChange={e => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#2B629B] outline-none text-sm"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#4A90C6] outline-none text-sm"
             />
           </div>
           <div className="space-y-1">
@@ -529,7 +529,7 @@ export const UserManagementModal: React.FC<{
               required
               value={formData.username || ''}
               onChange={e => setFormData({ ...formData, username: e.target.value })}
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#2B629B] outline-none text-sm"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#4A90C6] outline-none text-sm"
             />
           </div>
         </div>
@@ -542,7 +542,7 @@ export const UserManagementModal: React.FC<{
               required
               value={formData.email || ''}
               onChange={e => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#2B629B] outline-none text-sm"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#4A90C6] outline-none text-sm"
             />
           </div>
           <div className="space-y-1">
@@ -550,7 +550,7 @@ export const UserManagementModal: React.FC<{
             <select
               value={formData.role}
               onChange={e => setFormData({ ...formData, role: e.target.value as UserRole })}
-              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#2B629B] outline-none text-sm"
+              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#4A90C6] outline-none text-sm"
             >
               <option value={UserRole.PERSONAL}>Personal Banking</option>
               <option value={UserRole.BUSINESS}>Business Banking</option>
@@ -565,13 +565,13 @@ export const UserManagementModal: React.FC<{
             type="number"
             value={formData.balance ?? 0}
             onChange={e => setFormData({ ...formData, balance: parseFloat(e.target.value) || 0 })}
-            className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#2B629B] outline-none text-sm tabular-nums"
+            className="w-full bg-white border border-slate-300 rounded-xl p-2.5 focus:border-[#4A90C6] outline-none text-sm tabular-nums"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
         >
           <UserPlus size={17} />
           <span>{initialUser ? 'Save Account Record' : 'Create Account Record'}</span>
@@ -604,16 +604,16 @@ export const SettingsModal: React.FC<{
           <button
             type="button"
             onClick={() => handleToggle('hideBalance')}
-            className="w-full flex items-center justify-between p-4 bg-[#F2F6FB] rounded-xl border border-slate-200 hover:border-slate-300 transition-colors"
+            className="w-full flex items-center justify-between p-4 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1] hover:border-slate-300 transition-colors"
           >
             <div className="flex items-center gap-3 text-left">
-              {localSettings.hideBalance ? <EyeOff size={18} className="text-slate-500" /> : <Eye size={18} className="text-[#1C3D5A]" />}
+              {localSettings.hideBalance ? <EyeOff size={18} className="text-slate-500" /> : <Eye size={18} className="text-[#263746]" />}
               <div>
-                <p className="text-sm font-semibold text-[#1C3D5A]">Balance Privacy Masking</p>
+                <p className="text-sm font-semibold text-[#263746]">Balance Privacy Masking</p>
                 <p className="text-xs text-slate-500">Conceal balances on dashboard overview</p>
               </div>
             </div>
-            <div className={`w-11 h-6 rounded-full transition-colors relative ${localSettings.hideBalance ? 'bg-[#2B629B]' : 'bg-slate-300'}`}>
+            <div className={`w-11 h-6 rounded-full transition-colors relative ${localSettings.hideBalance ? 'bg-[#367EAF]' : 'bg-slate-300'}`}>
               <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${localSettings.hideBalance ? 'translate-x-6' : 'translate-x-1'}`} />
             </div>
           </button>
@@ -621,12 +621,12 @@ export const SettingsModal: React.FC<{
           <button
             type="button"
             onClick={() => handleToggle('biometricLogin')}
-            className="w-full flex items-center justify-between p-4 bg-[#F2F6FB] rounded-xl border border-slate-200 hover:border-slate-300 transition-colors"
+            className="w-full flex items-center justify-between p-4 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1] hover:border-slate-300 transition-colors"
           >
             <div className="flex items-center gap-3 text-left">
               <Fingerprint size={18} className={localSettings.biometricLogin ? 'text-[#16865B]' : 'text-slate-500'} />
               <div>
-                <p className="text-sm font-semibold text-[#1C3D5A]">Face ID Simulation</p>
+                <p className="text-sm font-semibold text-[#263746]">Face ID Simulation</p>
                 <p className="text-xs text-slate-500">Allow prototype camera sign-in flow</p>
               </div>
             </div>
@@ -644,8 +644,8 @@ export const SettingsModal: React.FC<{
               onClick={() => setLocalSettings({ ...localSettings, analyticsFocus: 'GROWTH' })}
               className={`p-3 rounded-xl border text-left transition-colors ${
                 localSettings.analyticsFocus === 'GROWTH'
-                  ? 'bg-[#2B629B] text-white border-[#2B629B]'
-                  : 'bg-[#F2F6FB] border-slate-200 text-[#2A4158]'
+                  ? 'bg-[#367EAF] text-white border-[#4A90C6]'
+                  : 'bg-[#F3F7FB] border-[#E2EAF1] text-[#263746]'
               }`}
             >
               <TrendingUp size={16} className="mb-1" />
@@ -656,8 +656,8 @@ export const SettingsModal: React.FC<{
               onClick={() => setLocalSettings({ ...localSettings, analyticsFocus: 'SPENDING' })}
               className={`p-3 rounded-xl border text-left transition-colors ${
                 localSettings.analyticsFocus === 'SPENDING'
-                  ? 'bg-[#2B629B] text-white border-[#2B629B]'
-                  : 'bg-[#F2F6FB] border-slate-200 text-[#2A4158]'
+                  ? 'bg-[#367EAF] text-white border-[#4A90C6]'
+                  : 'bg-[#F3F7FB] border-[#E2EAF1] text-[#263746]'
               }`}
             >
               <PieChart size={16} className="mb-1" />
@@ -672,7 +672,7 @@ export const SettingsModal: React.FC<{
             onUpdate(localSettings);
             onClose();
           }}
-          className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
         >
           <ShieldCheck size={17} />
           <span>Save Preferences</span>
@@ -696,11 +696,11 @@ export const TransactionDetailModal: React.FC<{
           <strong>Prototype Record:</strong> {transaction.status || 'DEMO — Unverified'}. This sample entry is for interface demonstration only and does not represent a genuine bank transfer.
         </div>
 
-        <div className="text-center p-5 bg-[#F2F6FB] rounded-xl border border-slate-200">
+        <div className="text-center p-5 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
           <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Amount ({transaction.currency || 'USD'})</p>
           <p
             className={`text-3xl font-display font-bold tabular-nums ${
-              transaction.type === 'CREDIT' ? 'text-[#16865B]' : 'text-[#1C3D5A]'
+              transaction.type === 'CREDIT' ? 'text-[#16865B]' : 'text-[#263746]'
             }`}
           >
             {transaction.type === 'CREDIT' ? '+' : '-'}$
@@ -708,27 +708,27 @@ export const TransactionDetailModal: React.FC<{
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-200 text-xs">
+        <div className="bg-white rounded-xl border border-[#E2EAF1] divide-y divide-slate-200 text-xs">
           <div className="flex justify-between items-center p-3.5">
             <span className="text-slate-500">Description</span>
-            <span className="text-[#1C3D5A] font-semibold text-right">{transaction.description}</span>
+            <span className="text-[#263746] font-semibold text-right">{transaction.description}</span>
           </div>
           <div className="flex justify-between items-center p-3.5">
             <span className="text-slate-500">Transaction Type</span>
-            <span className="text-[#1C3D5A] font-medium">{transaction.transactionTypeLabel || transaction.category}</span>
+            <span className="text-[#263746] font-medium">{transaction.transactionTypeLabel || transaction.category}</span>
           </div>
           <div className="flex justify-between items-center p-3.5">
             <span className="text-slate-500">Category</span>
-            <span className="text-[#1C3D5A] font-medium">{transaction.category}</span>
+            <span className="text-[#263746] font-medium">{transaction.category}</span>
           </div>
           <div className="flex justify-between items-center p-3.5">
             <span className="text-slate-500">Date</span>
-            <span className="text-[#1C3D5A] font-mono tabular-nums">{transaction.displayDate || transaction.date}</span>
+            <span className="text-[#263746] font-mono tabular-nums">{transaction.displayDate || transaction.date}</span>
           </div>
           {transaction.sampleSenderLabel && (
             <div className="flex justify-between items-center p-3.5">
               <span className="text-slate-500">Sample Sender Label</span>
-              <span className="text-[#1C3D5A] font-medium">{transaction.sampleSenderLabel} (Unverified)</span>
+              <span className="text-[#263746] font-medium">{transaction.sampleSenderLabel} (Unverified)</span>
             </div>
           )}
           <div className="flex justify-between items-center p-3.5">
@@ -744,7 +744,7 @@ export const TransactionDetailModal: React.FC<{
         <button
           type="button"
           onClick={() => window.print()}
-          className="w-full flex items-center justify-center gap-2 bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+          className="w-full flex items-center justify-center gap-2 bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
         >
           <ExternalLink size={16} />
           <span>Print Sample Statement View</span>
@@ -789,7 +789,7 @@ export const RecurringPaymentModal: React.FC<{
             required
             value={desc}
             onChange={e => setDesc(e.target.value)}
-            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm"
+            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm"
             placeholder="e.g. Monthly Utility Payment"
           />
         </div>
@@ -804,7 +804,7 @@ export const RecurringPaymentModal: React.FC<{
               step="0.01"
               value={amount}
               onChange={e => setAmount(e.target.value)}
-              className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm tabular-nums"
+              className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm tabular-nums"
               placeholder="0.00"
             />
           </div>
@@ -813,7 +813,7 @@ export const RecurringPaymentModal: React.FC<{
             <select
               value={freq}
               onChange={e => setFreq(e.target.value as any)}
-              className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm"
+              className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm"
             >
               <option value="DAILY">Daily</option>
               <option value="WEEKLY">Weekly</option>
@@ -830,13 +830,13 @@ export const RecurringPaymentModal: React.FC<{
             min="1"
             value={duration}
             onChange={e => setDuration(e.target.value)}
-            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm"
+            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
         >
           <Calendar size={17} />
           <span>Schedule Payment</span>
@@ -854,7 +854,7 @@ export const PremiumUpgradeModal: React.FC<{ isOpen: boolean; onClose: () => voi
           <Check size={28} className="text-[#16865B]" />
         </div>
         <div>
-          <h4 className="text-lg font-display font-bold text-[#1C3D5A]">Instruction Recorded</h4>
+          <h4 className="text-lg font-display font-bold text-[#263746]">Instruction Recorded</h4>
           <p className="text-slate-600 text-sm mt-1">
             Your demonstration transfer instruction has been recorded in the session ledger.
           </p>
@@ -862,7 +862,7 @@ export const PremiumUpgradeModal: React.FC<{ isOpen: boolean; onClose: () => voi
         <button
           type="button"
           onClick={onClose}
-          className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
         >
           Done
         </button>
@@ -939,7 +939,7 @@ export const TransferModal: React.FC<{
           >
             <div
               className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors ${
-                isCustomMode ? 'bg-[#2B629B] text-white border-[#2B629B]' : 'bg-white text-[#2A4158] border-slate-300'
+                isCustomMode ? 'bg-[#367EAF] text-white border-[#4A90C6]' : 'bg-white text-[#263746] border-slate-300'
               }`}
             >
               <Plus size={18} />
@@ -963,9 +963,9 @@ export const TransferModal: React.FC<{
                   src={person.avatar}
                   name={person.name}
                   sizeClass="w-11 h-11"
-                  className={active ? 'border-2 border-[#E31B23]' : 'border border-slate-200'}
+                  className={active ? 'border-2 border-[#E31B23]' : 'border border-[#E2EAF1]'}
                 />
-                <span className={`text-[11px] font-medium ${active ? 'text-[#1C3D5A] font-bold' : 'text-slate-600'}`}>
+                <span className={`text-[11px] font-medium ${active ? 'text-[#263746] font-bold' : 'text-slate-600'}`}>
                   {person.name}
                 </span>
               </button>
@@ -980,12 +980,12 @@ export const TransferModal: React.FC<{
             value={customRecipient}
             onChange={e => setCustomRecipient(e.target.value)}
             placeholder="Recipient full name or account"
-            className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:border-[#2B629B] outline-none"
+            className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:border-[#4A90C6] outline-none"
           />
         )}
 
-        <div className="text-center py-2 bg-[#F2F6FB] rounded-xl border border-slate-200">
-          <p className="text-3xl font-display font-bold text-[#1C3D5A] tabular-nums">
+        <div className="text-center py-2 bg-[#F3F7FB] rounded-xl border border-[#E2EAF1]">
+          <p className="text-3xl font-display font-bold text-[#263746] tabular-nums">
             ${numericAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <p className="text-[11px] font-mono text-slate-500">USD</p>
@@ -996,7 +996,7 @@ export const TransferModal: React.FC<{
           value={desc}
           onChange={e => setDesc(e.target.value)}
           placeholder="Optional payment reference"
-          className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:border-[#2B629B] outline-none"
+          className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:border-[#4A90C6] outline-none"
         />
 
         <div className="grid grid-cols-3 gap-2">
@@ -1005,7 +1005,7 @@ export const TransferModal: React.FC<{
               key={key}
               type="button"
               onClick={() => handleDigit(key)}
-              className="h-11 rounded-xl bg-[#F2F6FB] hover:bg-slate-200 text-[#1C3D5A] font-display font-bold text-base transition-colors"
+              className="h-11 rounded-xl bg-[#F3F7FB] hover:bg-slate-200 text-[#263746] font-display font-bold text-base transition-colors"
             >
               {key}
             </button>
@@ -1013,7 +1013,7 @@ export const TransferModal: React.FC<{
           <button
             type="button"
             onClick={handleBackspace}
-            className="h-11 rounded-xl bg-[#F2F6FB] hover:bg-slate-200 text-[#1C3D5A] flex items-center justify-center transition-colors"
+            className="h-11 rounded-xl bg-[#F3F7FB] hover:bg-slate-200 text-[#263746] flex items-center justify-center transition-colors"
             aria-label="Backspace"
           >
             <Delete size={18} />
@@ -1023,7 +1023,7 @@ export const TransferModal: React.FC<{
         <button
           type="submit"
           disabled={numericAmount <= 0 || (isCustomMode && !customRecipient.trim())}
-          className="w-full bg-[#2B629B] hover:bg-[#235282] disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
         >
           <span>Send ${numericAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           <ArrowRightCircle size={17} />
@@ -1057,7 +1057,7 @@ export const LoanModal: React.FC<{
             required
             value={amount}
             onChange={e => setAmount(e.target.value)}
-            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm tabular-nums"
+            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm tabular-nums"
           />
         </div>
         <div className="space-y-1.5">
@@ -1065,7 +1065,7 @@ export const LoanModal: React.FC<{
           <select
             value={term}
             onChange={e => setTerm(e.target.value)}
-            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#2B629B] outline-none text-sm"
+            className="w-full bg-white border border-slate-300 rounded-xl p-3 focus:border-[#4A90C6] outline-none text-sm"
           >
             <option value="12">12 Months</option>
             <option value="24">24 Months</option>
@@ -1074,7 +1074,7 @@ export const LoanModal: React.FC<{
         </div>
         <button
           type="submit"
-          className="w-full bg-[#2B629B] hover:bg-[#235282] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+          className="w-full bg-[#367EAF] hover:bg-[#28658F] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
         >
           Submit Inquiry
         </button>

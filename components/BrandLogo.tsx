@@ -14,17 +14,17 @@ export const BrandLogo: React.FC<{
       <div
         className={`${markSize} rounded-lg flex items-center justify-center font-display font-extrabold tracking-tight ${
           variant === 'dark'
-            ? 'bg-white text-[#2B629B] shadow-xs'
-            : 'bg-[#2B629B] text-white'
+            ? 'bg-white text-[#28658F] shadow-xs'
+            : 'bg-[#4A90C6] text-white border border-[#367EAF]'
         }`}
         aria-hidden="true"
       >
         <span>U</span>
-        <span className="text-[#E31B23]">B</span>
+        <span className={variant === 'dark' ? 'text-[#E31B23]' : 'text-white'}>B</span>
       </div>
       <span
         className={`${textSize} font-display font-bold tracking-tight ${
-          variant === 'dark' ? 'text-white' : 'text-[#1C3D5A]'
+          variant === 'dark' ? 'text-white' : 'text-[#28658F]'
         }`}
       >
         UsDigital-
@@ -59,7 +59,7 @@ export const ProfileAvatar: React.FC<{
 
   return (
     <div
-      className={`${sizeClass} rounded-full overflow-hidden border border-slate-200 bg-[#3D7AB8] text-white flex items-center justify-center shrink-0 ${className}`}
+      className={`${sizeClass} rounded-full overflow-hidden border border-[#E2EAF1] bg-[#4A90C6] text-white flex items-center justify-center shrink-0 ${className}`}
     >
       {src && !hasError ? (
         <img
