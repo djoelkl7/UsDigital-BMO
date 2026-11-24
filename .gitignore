@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 deploy-package/
+cpanel-upload/
 *.zip
 bun.lock
 *.local

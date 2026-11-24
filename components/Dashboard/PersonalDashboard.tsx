@@ -626,7 +626,7 @@ export const PersonalDashboard: React.FC<{
               src={user.passportUrl}
               name={user.name}
               sizeClass="w-24 h-24"
-              className="border-2 border-[#E2EAF1] shadow-xs"
+              className="border-2 border-[#E2EAF1] shadow-sm"
             />
             <div className="text-center sm:text-left flex-1">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">

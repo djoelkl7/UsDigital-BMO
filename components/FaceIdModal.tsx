@@ -272,7 +272,7 @@ export const FaceIdModal: React.FC<FaceIdModalProps> = ({
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-[#263746]/55 backdrop-blur-xs"
+        className="absolute inset-0 bg-[#263746]/55 backdrop-blur-sm"
         onClick={() => {
           stopCameraTracks();
           onClose();

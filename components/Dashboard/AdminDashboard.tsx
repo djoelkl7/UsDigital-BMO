@@ -119,7 +119,7 @@ export const AdminDashboard: React.FC<{
           </div>
           <div>
             <h2 className="font-display font-bold text-xl text-[#263746]">
-              UsDigital-<span className="text-[#E31B23]">BMU</span> Compliance Console
+              UsDigital-<span className="text-[#E31B23]">BMO</span> Compliance Console
             </h2>
             <p className="text-slate-500 text-sm">
               Account Oversight & Hold Management (Credentials are never exposed in UI)

@@ -7,6 +7,13 @@ export const CATHERINE_LOCK_NOTICE =
 export const CATHERINE_CREDENTIAL_HASH =
   '65ea40ac430d419d23f9ac0f37f92276:4d41d4d568a348fe4ef0060b5744d620425090c4f397e4b71f031ea42a8b7414e410991caca0ac195e33e446714e3ca3c0661acde3a42eb16635832a5d3d392f';
 
+const SERVER_DOMAIN =
+  (process.env.APP_DOMAIN || process.env.APP_URL || 'bbmoglobal.online')
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/\/.*$/, '')
+    .replace(/:\d+$/, '') || 'bbmoglobal.online';
+
 // Server-only demonstration user directory (never bundled into client code)
 export const SERVER_INITIAL_USERS: User[] = [
   {
@@ -24,7 +31,7 @@ export const SERVER_INITIAL_USERS: User[] = [
     idNumber: 'USB-774920-P',
     accountNumberMasked: '•••• •••• 8379',
     routingNumber: '021000021',
-    email: 'catherine.nelson@usdigital-bmu.com',
+    email: `catherine.nelson@${SERVER_DOMAIN}`,
     isDemoProfile: false,
     transactions: [
       {
@@ -133,7 +140,7 @@ export const SERVER_INITIAL_USERS: User[] = [
     idNumber: 'USB-492108-P',
     accountNumberMasked: '•••• •••• 3104',
     routingNumber: '021000021',
-    email: 'sarah.lee@usdigital-bmu.com',
+    email: `sarah.lee@${SERVER_DOMAIN}`,
     isDemoProfile: false,
     transactions: [
       {
@@ -227,7 +234,7 @@ export const SERVER_INITIAL_USERS: User[] = [
     failedLoginAttempts: 0,
     passportUrl: '/src/assets/images/admin_master_avatar_1791242940520.jpg',
     idNumber: 'USB-SEC-000001-A',
-    email: 'admin.ops@usdigital-bmu.com',
+    email: `admin.ops@${SERVER_DOMAIN}`,
     isDemoProfile: false,
     transactions: [],
     loans: [],

@@ -30,7 +30,7 @@ import {
   Fingerprint
 } from 'lucide-react';
 import { Transaction, RecurringPayment, UserSettings, User, UserRole, UserStatus } from '../types';
-import { AVATAR_STYLE_ARCHETYPES, PASSPORT_PHOTO_PRESETS } from '../constants';
+import { APP_DOMAIN, AVATAR_STYLE_ARCHETYPES, PASSPORT_PHOTO_PRESETS } from '../constants';
 import { ProfileAvatar } from './BrandLogo';
 
 interface ModalProps {
@@ -45,7 +45,7 @@ export const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, children, 
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#263746]/55 backdrop-blur-xs" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#263746]/55 backdrop-blur-sm" onClick={onClose} />
       <div
         className={`relative bg-white w-full ${maxWidth} rounded-2xl overflow-hidden animate-scale-in border border-[#E2EAF1] shadow-2xl flex flex-col max-h-[90vh] text-[#263746]`}
       >
@@ -205,7 +205,7 @@ export const UserProfileDetailModal: React.FC<{
                   <Mail size={14} /> Registry Email
                 </span>
                 <span className="font-mono text-[#263746] font-medium">
-                  {user.email || `${user.username.toLowerCase()}@usdigital-bmu.com`}
+                  {user.email || `${user.username.toLowerCase()}@${APP_DOMAIN}`}
                 </span>
               </div>
               <div className="flex justify-between items-center p-4">
@@ -230,7 +230,7 @@ export const UserProfileDetailModal: React.FC<{
           <div className="p-6 rounded-2xl bg-[#367EAF] text-white border border-[#4A90C6]">
             <div className="text-center pb-4 border-b border-white/10 mb-5">
               <p className="text-[11px] text-slate-300 tracking-[0.2em] uppercase font-semibold">
-                UsDigital-<span className="text-[#E31B23]">BMU</span> Identity Record
+                UsDigital-<span className="text-[#E31B23]">BMO</span> Identity Record
               </p>
               <h3 className="text-lg font-display font-bold tracking-wider text-white mt-1">
                 PROFILE IDENTITY SUMMARY
@@ -478,7 +478,7 @@ export const UserManagementModal: React.FC<{
       loans: initialUser?.loans || [],
       recurringPayments: initialUser?.recurringPayments || [],
       failedLoginAttempts: initialUser?.failedLoginAttempts || 0,
-      email: formData.email || `${formData.username?.toLowerCase() || 'user'}@usdigital-bmu.com`,
+      email: formData.email || `${formData.username?.toLowerCase() || 'user'}@${APP_DOMAIN}`,
       idNumber: formData.idNumber || `USB-${Math.floor(Math.random() * 899999 + 100000)}-P`,
       passportUrl: formData.passportUrl || '/src/assets/images/dolmat_bin_avatar_1791242922162.jpg',
       lockReason: formData.lockReason || initialUser?.lockReason,

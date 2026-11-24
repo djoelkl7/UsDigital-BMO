@@ -1,4 +1,4 @@
-name: Build and Package UsDigital-BMU Production
+name: Build and Package UsDigital-BMO Production
 
 on:
   push:
@@ -25,8 +25,13 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies (clean lockfile install)
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Run TypeScript type check (lint)
         run: npm run lint
@@ -34,8 +39,10 @@ jobs:
       - name: Build production frontend bundle
         env:
           VITE_APP_ENV: production
-          VITE_APP_NAME: UsDigital-BMU
-        run: npm run build
+          VITE_APP_NAME: UsDigital-BMO
+          VITE_APP_URL: http://bbmoglobal.online/
+          VITE_APP_DOMAIN: bbmoglobal.online
+        run: npm run build:cpanel
 
       - name: Verify production build output
         run: |
@@ -46,15 +53,9 @@ jobs:
           test -f app.mjs
           test -d src/assets/images
 
-      - name: Prepare clean cPanel/Hostinger Node.js deployment package
+      - name: Verify cPanel/Hostinger Node.js deployment package
         run: |
-          rm -rf deploy-package UsDigital-BMO-CPANEL-PRODUCTION.zip
-          mkdir -p deploy-package/src/assets
-          cp -r dist deploy-package/dist
-          cp -r src/assets/images deploy-package/src/assets/images
-          cp server.ts serverData.ts types.ts app.mjs package.json package-lock.json .env.example DEPLOYMENT-README.txt deploy-package/
-          cp deploy/.htaccess deploy-package/.htaccess
-          (cd deploy-package && zip -r ../UsDigital-BMO-CPANEL-PRODUCTION.zip . -x "*.DS_Store")
+          test -f UsDigital-BMO-CPANEL-PRODUCTION.zip
           unzip -t UsDigital-BMO-CPANEL-PRODUCTION.zip
 
       - name: Upload cPanel/Hostinger deployment artifact

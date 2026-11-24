@@ -114,7 +114,7 @@ export const Layout: React.FC<{
       {/* Mobile Sidebar Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[#263746]/45 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-40 bg-[#263746]/45 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -153,7 +153,7 @@ export const Layout: React.FC<{
                 onClick={() => handleSelectNav(item.id)}
                 className={`w-full flex items-center justify-between gap-2.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors whitespace-nowrap min-h-[42px] ${
                   isActive
-                    ? 'bg-white text-[#28658F] font-semibold shadow-xs'
+                    ? 'bg-white text-[#28658F] font-semibold shadow-sm'
                     : 'text-white/90 hover:bg-[#28658F]/70 hover:text-white border border-transparent'
                 }`}
               >

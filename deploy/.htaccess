@@ -1,4 +1,4 @@
-# UsDigital-BMU Apache / LiteSpeed Companion Rules
+# UsDigital-BMO Apache / LiteSpeed Companion Rules
 # NOTE: On cPanel "Setup Node.js App" (Phusion Passenger), cPanel automatically
 # appends Passenger directives to the domain's .htaccess. Keep those Passenger
 # lines intact and do NOT add static index.html RewriteRules that intercept

@@ -1,3 +1,38 @@
+const normalizeDomain = (value?: string): string => {
+  if (!value) return '';
+  return value.trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/:\d+$/, '');
+};
+
+const isInternalHost = (host: string): boolean => {
+  if (!host) return true;
+  const lower = host.toLowerCase();
+  return (
+    lower === 'localhost' ||
+    lower === '127.0.0.1' ||
+    lower === '0.0.0.0' ||
+    lower.endsWith('.local') ||
+    lower.endsWith('.run.app') ||
+    lower.includes('googleusercontent.com') ||
+    lower.includes('webcontainer') ||
+    lower.startsWith('ais-')
+  );
+};
+
+const metaEnv = ((import.meta as unknown as { env?: Record<string, string | undefined> }).env) || {};
+const envDomain = normalizeDomain(metaEnv.VITE_APP_DOMAIN || metaEnv.VITE_APP_URL);
+const runtimeHost =
+  typeof window !== 'undefined' ? normalizeDomain(window.location.hostname) : '';
+
+export const APP_DOMAIN =
+  runtimeHost && !isInternalHost(runtimeHost)
+    ? runtimeHost
+    : envDomain || 'bbmoglobal.online';
+
+export const APP_ORIGIN =
+  typeof window !== 'undefined' && runtimeHost && !isInternalHost(runtimeHost)
+    ? `${window.location.origin}/`
+    : (metaEnv.VITE_APP_URL || `http://${APP_DOMAIN}/`).replace(/\/?$/, '/');
+
 export const CATHERINE_LOCK_NOTICE =
   'Your account is temporarily locked due to a high-value deposit activity. Please contact the bank’s support team for assistance with account verification.';
 

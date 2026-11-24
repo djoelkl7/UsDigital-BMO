@@ -118,9 +118,9 @@ const LOGIN_SHOWCASE_TABS: Record<
 
 const LoginPage: React.FC = () => {
   const { dispatch } = useBank();
-  const [username, setUsername] = useState(() => localStorage.getItem('usd_bmu_remembered_user') || '');
+  const [username, setUsername] = useState(() => localStorage.getItem('usd_bmo_remembered_user') || '');
   const [password, setPassword] = useState('');
-  const [rememberId, setRememberId] = useState(() => Boolean(localStorage.getItem('usd_bmu_remembered_user')));
+  const [rememberId, setRememberId] = useState(() => Boolean(localStorage.getItem('usd_bmo_remembered_user')));
   const [showPassword, setShowPassword] = useState(false);
   const [activeInfoTab, setActiveInfoTab] = useState<LoginInfoTab>('PERSONAL');
   const [loading, setLoading] = useState(false);
@@ -168,9 +168,9 @@ const LoginPage: React.FC = () => {
   const completeSignIn = useCallback(
     (payload: { user: User; session: SessionInfo; directory?: User[] }) => {
       if (rememberId) {
-        localStorage.setItem('usd_bmu_remembered_user', payload.user.username);
+        localStorage.setItem('usd_bmo_remembered_user', payload.user.username);
       } else {
-        localStorage.removeItem('usd_bmu_remembered_user');
+        localStorage.removeItem('usd_bmo_remembered_user');
       }
       dispatch({ type: 'LOGIN', payload });
       window.location.hash = '#dashboard';
@@ -256,7 +256,7 @@ const LoginPage: React.FC = () => {
       const data = await res.json();
       setForgotResult(
         data.message ||
-          'If an enrolled UsDigital-BMU profile matches your entry, recovery instructions have been queued.'
+          'If an enrolled UsDigital-BMO profile matches your entry, recovery instructions have been queued.'
       );
     } catch {
       setForgotResult('Unable to process request at this time.');
@@ -306,11 +306,11 @@ const LoginPage: React.FC = () => {
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Secure Sign-In Card */}
           <div className="lg:col-span-5">
-            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-xs">
+            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-sm">
               <div className="mb-6">
                 <p className="text-xs font-semibold text-[#E31B23] uppercase tracking-wider">Online Banking</p>
                 <h1 className="text-2xl sm:text-3xl font-display font-bold text-[#28658F] mt-1">
-                  Sign in to UsDigital-<span className="text-[#E31B23]">BMU</span>
+                  Sign in to UsDigital-<span className="text-[#E31B23]">BMO</span>
                 </h1>
                 <p className="text-sm text-[#68798A] mt-1.5">
                   Access your personal or commercial banking workspace securely.
@@ -486,7 +486,7 @@ const LoginPage: React.FC = () => {
 
           {/* Right: Institutional Digital Banking Showcase */}
           <div className="lg:col-span-7 space-y-5">
-            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-xs">
+            <div className="bg-white border border-[#E2EAF1] rounded-2xl p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap gap-2 mb-5 md:hidden">
                 {(['PERSONAL', 'BUSINESS', 'SECURITY', 'SUPPORT'] as LoginInfoTab[]).map(tab => (
                   <button
@@ -505,7 +505,7 @@ const LoginPage: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div className="md:col-span-7 space-y-4">
                   <p className="text-xs font-semibold text-[#E31B23] uppercase tracking-wider">
-                    UsDigital-BMU Retail Platform
+                    UsDigital-BMO Retail Platform
                   </p>
                   <h2 className="text-2xl font-display font-bold text-[#263746] leading-snug">
                     {activeShowcase.heading}
@@ -570,7 +570,7 @@ const LoginPage: React.FC = () => {
 
       <footer className="bg-white border-t border-[#E2EAF1] py-5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#68798A]">
-          <p>UsDigital-BMU · Retail & Commercial Digital Banking</p>
+          <p>UsDigital-BMO · Retail & Commercial Digital Banking</p>
           <p>Protected Online Banking Workspace</p>
         </div>
       </footer>

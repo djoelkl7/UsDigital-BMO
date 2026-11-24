@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SERVER_INITIAL_USERS, CATHERINE_LOCK_NOTICE, CATHERINE_CREDENTIAL_HASH } from './serverData';
@@ -8,8 +9,75 @@ import { User, UserRole, UserStatus, Transaction } from './types';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Load local .env if present (when invoked directly via tsx/npm start without --env-file)
+const localEnvPath = path.join(__dirname, '.env');
+if (fs.existsSync(localEnvPath)) {
+  for (const rawLine of fs.readFileSync(localEnvPath, 'utf8').split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const eqIdx = line.indexOf('=');
+    if (eqIdx <= 0) continue;
+    const key = line.slice(0, eqIdx).trim();
+    let val = line.slice(eqIdx + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (key && !(key in process.env)) {
+      process.env[key] = val;
+    }
+  }
+}
+
 const PORT = Number(process.env.PORT || 3000);
 const HOST = '0.0.0.0';
+
+function normalizeDomain(value?: string): string {
+  if (!value) return '';
+  return value.trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/:\d+$/, '');
+}
+
+function isInternalHostname(host: string): boolean {
+  const lower = host.toLowerCase();
+  return (
+    !lower ||
+    lower === 'localhost' ||
+    lower === '127.0.0.1' ||
+    lower === '0.0.0.0' ||
+    lower.endsWith('.local') ||
+    lower.endsWith('.run.app') ||
+    lower.includes('googleusercontent.com') ||
+    lower.includes('webcontainer') ||
+    lower.startsWith('ais-')
+  );
+}
+
+const rawEnvUrl = (process.env.SITE_URL || process.env.APP_URL || '').trim();
+const envUrlDomain = normalizeDomain(rawEnvUrl);
+const DEFAULT_APP_URL =
+  rawEnvUrl && envUrlDomain && !isInternalHostname(envUrlDomain)
+    ? rawEnvUrl.replace(/\/?$/, '/')
+    : 'http://bbmoglobal.online/';
+const envDomain = normalizeDomain(process.env.SITE_DOMAIN || process.env.APP_DOMAIN);
+const DEFAULT_APP_DOMAIN =
+  (envDomain && !isInternalHostname(envDomain) ? envDomain : '') ||
+  normalizeDomain(DEFAULT_APP_URL) ||
+  'bbmoglobal.online';
+
+function resolveRequestSite(req: Request): { domain: string; origin: string } {
+  const rawHost = (req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
+  const hostDomain = normalizeDomain(rawHost);
+  if (hostDomain && !isInternalHostname(hostDomain)) {
+    const proto = (req.get('x-forwarded-proto') || req.protocol || 'http').split(',')[0].trim();
+    return {
+      domain: hostDomain,
+      origin: `${proto}://${rawHost}/`
+    };
+  }
+  return {
+    domain: DEFAULT_APP_DOMAIN,
+    origin: DEFAULT_APP_URL
+  };
+}
 
 // Session signing secret held strictly in server memory if not provided via environment
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
@@ -222,6 +290,7 @@ function issueAuthenticatedSession(user: User, authMethod: string, rememberMe: b
 
 async function startServer() {
   const app = express();
+  app.set('trust proxy', 1);
   app.use(express.json({ limit: '1mb' }));
 
   // Security headers for API responses
@@ -232,8 +301,15 @@ async function startServer() {
   });
 
   // Health check endpoint for hosting/load-balancer monitoring
-  app.get('/api/health', (_req: Request, res: Response) => {
-    res.json({ ok: true, service: 'UsDigital-BMU', mode: process.env.NODE_ENV || 'development' });
+  app.get('/api/health', (req: Request, res: Response) => {
+    const site = resolveRequestSite(req);
+    res.json({
+      ok: true,
+      service: 'UsDigital-BMO',
+      domain: site.domain,
+      url: site.origin,
+      mode: process.env.NODE_ENV || 'development'
+    });
   });
 
   // Check whether environment passcodes or first-run bootstrap credentials exist (boolean flags only)
@@ -363,7 +439,7 @@ async function startServer() {
     }
     return res.json({
       message:
-        'If an enrolled UsDigital-BMU profile matches your entry, recovery instructions have been queued through your registered support channel.'
+        'If an enrolled UsDigital-BMO profile matches your entry, recovery instructions have been queued through your registered support channel.'
     });
   });
 
@@ -506,34 +582,44 @@ async function startServer() {
   } else {
     app.use('/src/assets/images', express.static(path.resolve(__dirname, 'src/assets/images')));
     const distDir = path.resolve(__dirname, 'dist');
-    app.use(express.static(distDir));
+    app.use('/src/assets/images', express.static(path.join(distDir, 'src/assets/images')));
+    app.use(express.static(distDir, { index: false }));
     app.use('/api', (_req, res) => {
       res.status(404).json({ error: 'API endpoint not found.' });
     });
     app.use(['/assets', '/src/assets'], (_req, res) => {
       res.status(404).send('Asset not found.');
     });
+    const distIndexPath = path.join(distDir, 'index.html');
     app.use((req, res) => {
       if (req.method !== 'GET' && req.method !== 'HEAD') {
         return res.status(405).json({ error: 'Method not allowed.' });
       }
-      return res.sendFile(path.join(distDir, 'index.html'));
+      if (!fs.existsSync(distIndexPath)) {
+        return res.status(500).send('Production build missing. Run `npm run build` first.');
+      }
+      const site = resolveRequestSite(req);
+      let html = fs.readFileSync(distIndexPath, 'utf8');
+      if (site.origin !== 'http://bbmoglobal.online/') {
+        html = html.replace(/http:\/\/bbmoglobal\.online\//g, site.origin);
+      }
+      return res.type('html').send(html);
     });
   }
 
   const rawPort = process.env.PORT;
   if (rawPort && !/^\d+$/.test(rawPort)) {
     app.listen(rawPort, () => {
-      console.log(`UsDigital-BMU server listening on socket ${rawPort}`);
+      console.log(`UsDigital-BMO server listening on socket ${rawPort}`);
     });
   } else {
     app.listen(PORT, HOST, () => {
-      console.log(`UsDigital-BMU server listening on http://${HOST}:${PORT}`);
+      console.log(`UsDigital-BMO server listening on http://${HOST}:${PORT}`);
     });
   }
 }
 
 startServer().catch(err => {
-  console.error('Failed to start UsDigital-BMU server:', err);
+  console.error('Failed to start UsDigital-BMO server:', err);
   process.exit(1);
 });

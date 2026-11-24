@@ -7,20 +7,22 @@ export const BrandLogo: React.FC<{
   const textSize =
     size === 'sm' ? 'text-base' : size === 'lg' ? 'text-2xl' : 'text-lg';
   const markSize =
-    size === 'sm' ? 'w-7 h-7 text-xs' : size === 'lg' ? 'w-10 h-10 text-base' : 'w-8 h-8 text-sm';
+    size === 'sm' ? 'w-7 h-7' : size === 'lg' ? 'w-10 h-10' : 'w-8 h-8';
 
   return (
     <div className="inline-flex items-center gap-2.5 whitespace-nowrap shrink-0 select-none">
       <div
-        className={`${markSize} rounded-lg flex items-center justify-center font-display font-extrabold tracking-tight ${
+        className={`${markSize} rounded-full overflow-hidden shrink-0 bg-white flex items-center justify-center ${
           variant === 'dark'
-            ? 'bg-white text-[#28658F] shadow-xs'
-            : 'bg-[#4A90C6] text-white border border-[#367EAF]'
+            ? 'ring-1 ring-white/30 shadow-sm'
+            : 'border border-[#E2EAF1]'
         }`}
-        aria-hidden="true"
       >
-        <span>U</span>
-        <span className={variant === 'dark' ? 'text-[#E31B23]' : 'text-white'}>B</span>
+        <img
+          src="/assets/aistudio/IMG_9215_0abfc822.jpeg"
+          alt="UsDigital-BMO Logo"
+          className="w-full h-full object-cover scale-110"
+        />
       </div>
       <span
         className={`${textSize} font-display font-bold tracking-tight ${
@@ -35,7 +37,7 @@ export const BrandLogo: React.FC<{
               : 'text-[#E31B23] font-extrabold'
           }
         >
-          BMU
+          BMO
         </span>
       </span>
     </div>

@@ -53,7 +53,7 @@ export const BusinessDashboard: React.FC<{
               Commercial Account Temporarily Locked
             </p>
             <p className="text-sm text-[#263746] mt-0.5">
-              {user.lockReason || 'Account temporarily locked. Please contact UsDigital-BMU support.'}
+              {user.lockReason || 'Account temporarily locked. Please contact UsDigital-BMO support.'}
             </p>
           </div>
         </div>

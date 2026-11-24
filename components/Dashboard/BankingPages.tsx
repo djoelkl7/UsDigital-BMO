@@ -23,7 +23,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { User, UserStatus, Beneficiary, UserSettings, SessionInfo } from '../../types';
-import { CATHERINE_LOCK_NOTICE } from '../../constants';
+import { APP_DOMAIN, CATHERINE_LOCK_NOTICE } from '../../constants';
 import { NavSection } from '../Layout';
 
 export const StatementsView: React.FC<{
@@ -647,7 +647,7 @@ export const NotificationsView: React.FC<{
             <Bell size={19} className="text-[#E31B23]" />
             <div>
               <h2 className="text-lg font-display font-bold text-[#263746]">Security & Account Notifications</h2>
-              <p className="text-xs text-slate-500">Alerts and status updates for your UsDigital-BMU profile</p>
+              <p className="text-xs text-slate-500">Alerts and status updates for your UsDigital-BMO profile</p>
             </div>
           </div>
 
@@ -748,7 +748,7 @@ export const SupportView: React.FC<{
           <HelpCircle size={20} className="text-[#E31B23]" />
           <div>
             <h2 className="text-lg font-display font-bold text-[#263746]">Help & Client Support Desk</h2>
-            <p className="text-xs text-slate-500">UsDigital-BMU Account Verification & Assistance</p>
+            <p className="text-xs text-slate-500">UsDigital-BMO Account Verification & Assistance</p>
           </div>
         </div>
 
@@ -825,7 +825,7 @@ export const SupportView: React.FC<{
               <Mail size={16} className="text-[#263746] shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-[#263746]">Client Support Email</p>
-                <p className="font-mono text-slate-600 mt-0.5">support@usdigital-bmu.com</p>
+                <p className="font-mono text-slate-600 mt-0.5">{`support@${APP_DOMAIN}`}</p>
               </div>
             </div>
             <div className="p-3.5 rounded-xl bg-[#F3F7FB] border border-[#E2EAF1] flex items-start gap-3">
