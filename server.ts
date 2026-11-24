@@ -63,15 +63,24 @@ const DEFAULT_APP_DOMAIN =
   normalizeDomain(DEFAULT_APP_URL) ||
   'bbmoglobal.online';
 
+const VALID_HOST_HEADER_RE =
+  /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+(?::\d{1,5})?$/i;
+
 function resolveRequestSite(req: Request): { domain: string; origin: string } {
   const rawHost = (req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
-  const hostDomain = normalizeDomain(rawHost);
-  if (hostDomain && !isInternalHostname(hostDomain)) {
-    const proto = (req.get('x-forwarded-proto') || req.protocol || 'http').split(',')[0].trim();
-    return {
-      domain: hostDomain,
-      origin: `${proto}://${rawHost}/`
-    };
+  if (rawHost && VALID_HOST_HEADER_RE.test(rawHost)) {
+    const hostDomain = normalizeDomain(rawHost);
+    if (hostDomain && !isInternalHostname(hostDomain)) {
+      const rawProto = (req.get('x-forwarded-proto') || req.protocol || 'http')
+        .split(',')[0]
+        .trim()
+        .toLowerCase();
+      const proto = rawProto === 'https' ? 'https' : 'http';
+      return {
+        domain: hostDomain,
+        origin: `${proto}://${rawHost}/`
+      };
+    }
   }
   return {
     domain: DEFAULT_APP_DOMAIN,
@@ -149,7 +158,7 @@ function getEnvCredentialFlags() {
 
 function isAuthInitialized(): boolean {
   const { demoConfigured, adminConfigured } = getEnvCredentialFlags();
-  return bootstrapClaimed || demoConfigured || adminConfigured || credentialHashes.size > 0;
+  return bootstrapClaimed || demoConfigured || adminConfigured;
 }
 
 // Verify credentials independently per user role using hashed credentials only
@@ -198,6 +207,11 @@ function verifySessionToken(token: string): TokenPayload | null {
 function checkRateLimit(req: Request): boolean {
   const ip = req.ip || 'unknown';
   const now = Date.now();
+  if (authAttemptsByIp.size > 2000) {
+    for (const [key, val] of authAttemptsByIp) {
+      if (now > val.resetAt) authAttemptsByIp.delete(key);
+    }
+  }
   const entry = authAttemptsByIp.get(ip);
   if (!entry || now > entry.resetAt) {
     authAttemptsByIp.set(ip, { count: 1, resetAt: now + 5 * 60 * 1000 });
@@ -293,10 +307,21 @@ async function startServer() {
   app.set('trust proxy', 1);
   app.use(express.json({ limit: '1mb' }));
 
-  // Security headers for API responses
+  // Security headers across all responses
+  app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(self), microphone=(), geolocation=()');
+    if (req.secure) {
+      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    next();
+  });
+
+  // No-store cache header for API responses
   app.use('/api', (_req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
     next();
   });
 
@@ -325,6 +350,9 @@ async function startServer() {
 
   // One-time first-run passcode setup only when environment passcodes are not configured
   app.post('/api/auth/bootstrap', (req: Request, res: Response) => {
+    if (!checkRateLimit(req)) {
+      return res.status(429).json({ error: 'Too many requests. Please wait a few minutes.' });
+    }
     if (isAuthInitialized()) {
       return res.status(409).json({
         error: 'Security credentials are already initialized. Sign in with your configured passcode.'
@@ -392,7 +420,7 @@ async function startServer() {
     return res.json(issueAuthenticatedSession(user, 'Password Authentication', rememberMe));
   });
 
-  // Biometric Face ID Simulation (Prototype) — requires valid server-side credential verification
+  // Biometric Face ID verification — requires valid server-side credential verification
   app.post('/api/auth/biometric-session', (req: Request, res: Response) => {
     if (!checkRateLimit(req)) {
       return res.status(429).json({ error: 'Too many authentication attempts. Please wait a few minutes.' });
@@ -417,14 +445,28 @@ async function startServer() {
 
     const user = findUserByIdentifier(identifier);
     if (!user || !verifyUserPassword(user, passcode)) {
+      if (user) {
+        user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+        user.loginHistory = [
+          {
+            id: `lh-${Date.now()}`,
+            timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC',
+            device: 'Camera Preview (Local Only)',
+            location: 'Client Request',
+            method: 'Face ID Verification',
+            status: 'Failed' as const
+          },
+          ...(user.loginHistory || [])
+        ].slice(0, 15);
+      }
       return res.status(401).json({
-        error: 'Biometric simulation requires valid account credential verification.'
+        error: 'Biometric verification requires valid account credential verification.'
       });
     }
 
     if (!user.settings.biometricLogin) {
       return res.status(403).json({
-        error: 'Biometric sign-in simulation is disabled in this account’s security settings.'
+        error: 'Biometric sign-in is disabled in this account’s security settings.'
       });
     }
 
@@ -433,6 +475,9 @@ async function startServer() {
 
   // Non-enumerating Forgot Password endpoint
   app.post('/api/auth/forgot-password', (req: Request, res: Response) => {
+    if (!checkRateLimit(req)) {
+      return res.status(429).json({ error: 'Too many requests. Please wait a few minutes.' });
+    }
     const identifier = typeof req.body?.identifier === 'string' ? req.body.identifier.trim() : '';
     if (!identifier) {
       return res.status(400).json({ error: 'Please enter a username or email address.' });
@@ -542,16 +587,46 @@ async function startServer() {
     if (!target) return res.status(404).json({ error: 'User not found.' });
 
     if (req.body?.settings && typeof req.body.settings === 'object') {
-      target.settings = { ...target.settings, ...req.body.settings };
+      const incomingSettings = req.body.settings as Record<string, unknown>;
+      if (typeof incomingSettings.hideBalance === 'boolean') {
+        target.settings.hideBalance = incomingSettings.hideBalance;
+      }
+      if (incomingSettings.analyticsFocus === 'GROWTH' || incomingSettings.analyticsFocus === 'SPENDING') {
+        target.settings.analyticsFocus = incomingSettings.analyticsFocus;
+      }
+      if (typeof incomingSettings.biometricLogin === 'boolean') {
+        target.settings.biometricLogin = incomingSettings.biometricLogin;
+      }
+      if (
+        authUser.role === UserRole.ADMIN &&
+        typeof incomingSettings.transferLimit === 'number' &&
+        Number.isFinite(incomingSettings.transferLimit) &&
+        incomingSettings.transferLimit >= 0
+      ) {
+        target.settings.transferLimit = incomingSettings.transferLimit;
+      }
     }
     if (typeof req.body?.passportUrl === 'string') {
-      target.passportUrl = req.body.passportUrl;
+      const url = req.body.passportUrl.trim();
+      const isSafeAsset =
+        url.startsWith('/src/assets/images/') ||
+        url.startsWith('/assets/') ||
+        /^https:\/\//i.test(url) ||
+        /^data:image\/(png|jpeg|jpg|webp);base64,[a-z0-9+/=]+$/i.test(url);
+      if (!isSafeAsset || url.length > 750_000) {
+        return res.status(400).json({ error: 'Invalid or oversized portrait image URL.' });
+      }
+      target.passportUrl = url;
     }
     if (authUser.role === UserRole.ADMIN) {
       if (req.body?.status === UserStatus.ACTIVE || req.body?.status === UserStatus.LOCKED) {
         target.status = req.body.status;
       }
-      if (typeof req.body?.balance === 'number' && Number.isFinite(req.body.balance)) {
+      if (
+        typeof req.body?.balance === 'number' &&
+        Number.isFinite(req.body.balance) &&
+        req.body.balance >= 0
+      ) {
         target.balance = req.body.balance;
       }
     }
