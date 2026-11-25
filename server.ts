@@ -66,16 +66,27 @@ const DEFAULT_APP_DOMAIN =
 const VALID_HOST_HEADER_RE =
   /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+(?::\d{1,5})?$/i;
 
+function isRequestHttps(req: Request): boolean {
+  if (req.secure) return true;
+  const fwdProto = (req.get('x-forwarded-proto') || req.protocol || '')
+    .split(',')[0]
+    .trim()
+    .toLowerCase();
+  if (fwdProto === 'https') return true;
+  const fwdSsl = (req.get('x-forwarded-ssl') || req.get('front-end-https') || '').trim().toLowerCase();
+  if (fwdSsl === 'on' || fwdSsl === '1' || fwdSsl === 'true') return true;
+  const cfVisitor = req.get('cf-visitor') || '';
+  if (cfVisitor.includes('"https"')) return true;
+  return false;
+}
+
 function resolveRequestSite(req: Request): { domain: string; origin: string } {
-  const rawHost = (req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
+  const rawHostHeader = (req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
+  const rawHost = rawHostHeader.replace(/\.+(?=:\d+$|$)/, '');
   if (rawHost && VALID_HOST_HEADER_RE.test(rawHost)) {
     const hostDomain = normalizeDomain(rawHost);
     if (hostDomain && !isInternalHostname(hostDomain)) {
-      const rawProto = (req.get('x-forwarded-proto') || req.protocol || 'http')
-        .split(',')[0]
-        .trim()
-        .toLowerCase();
-      const proto = rawProto === 'https' ? 'https' : 'http';
+      const proto = isRequestHttps(req) ? 'https' : 'http';
       return {
         domain: hostDomain,
         origin: `${proto}://${rawHost}/`
@@ -302,10 +313,29 @@ function issueAuthenticatedSession(user: User, authMethod: string, rememberMe: b
   };
 }
 
+const FORCE_HTTPS = process.env.NODE_ENV === 'production' && process.env.FORCE_HTTPS !== 'false';
+
 async function startServer() {
   const app = express();
   app.set('trust proxy', 1);
   app.use(express.json({ limit: '1mb' }));
+
+  // Force-redirect non-HTTPS traffic to HTTPS in production for any public domain
+  app.use((req, res, next) => {
+    if (!FORCE_HTTPS) return next();
+    if (req.path.startsWith('/.well-known/')) return next();
+    if (isRequestHttps(req)) return next();
+
+    const rawHostHeader = (req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
+    const rawHost = rawHostHeader.replace(/\.+(?=:\d+$|$)/, '').replace(/:80$/, '');
+    if (!rawHost || !VALID_HOST_HEADER_RE.test(rawHost)) return next();
+
+    const hostDomain = normalizeDomain(rawHost);
+    if (!hostDomain || isInternalHostname(hostDomain)) return next();
+
+    const statusCode = req.method === 'GET' || req.method === 'HEAD' ? 301 : 308;
+    return res.redirect(statusCode, `https://${rawHost}${req.originalUrl || '/'}`);
+  });
 
   // Security headers across all responses
   app.use((req, res, next) => {
@@ -313,7 +343,7 @@ async function startServer() {
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     res.setHeader('Permissions-Policy', 'camera=(self), microphone=(), geolocation=()');
-    if (req.secure) {
+    if (isRequestHttps(req)) {
       res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
     }
     next();

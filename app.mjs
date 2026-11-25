@@ -26,6 +26,12 @@ if (fs.existsSync(envPath)) {
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-// Register TypeScript ESM loader from production dependency `tsx` and start Express server
-await import('tsx');
-await import('./server.ts');
+// Prefer pre-compiled production server.mjs when present (avoids runtime esbuild/tsx on shared cPanel)
+const compiledServer = path.join(__dirname, 'server.mjs');
+if (fs.existsSync(compiledServer)) {
+  await import('./server.mjs');
+} else {
+  await import('tsx');
+  await import('./server.ts');
+}
+

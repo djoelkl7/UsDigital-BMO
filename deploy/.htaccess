@@ -1,15 +1,20 @@
 # UsDigital-BMO Apache / LiteSpeed Companion Rules
+# Works for ANY domain or subdomain configured in cPanel (not tied to one domain).
 # NOTE: On cPanel "Setup Node.js App" (Phusion Passenger), cPanel automatically
-# appends Passenger directives to the domain's .htaccess. Keep those Passenger
-# lines intact and do NOT add static index.html RewriteRules that intercept
-# /api/* or server-side Node.js routes.
+# appends Passenger directives to the domain's .htaccess. Merge these rules above
+# the Passenger block if needed and do NOT add static index.html RewriteRules that
+# intercept /api/* or server-side Node.js routes.
 
-# Optional: Uncomment after enabling AutoSSL / SSL certificate on bbmoglobal.online
-# <IfModule mod_rewrite.c>
-#   RewriteEngine On
-#   RewriteCond %{HTTPS} !=on
-#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Force-redirect all non-HTTPS traffic to HTTPS for any public domain
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteCond %{HTTP:X-Forwarded-SSL} !on [NC]
+  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+  RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$ [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
@@ -17,7 +22,7 @@
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Block direct HTTP access to sensitive dotfiles and server source files if served from web root
+# Block direct HTTP access to sensitive dotfiles if served from web root
 <FilesMatch "^\.(env|git|htaccess)">
   <IfModule mod_authz_core.c>
     Require all denied

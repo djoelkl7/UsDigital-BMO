@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { build as esbuild } from 'esbuild';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,10 +34,22 @@ if (fs.existsSync(srcImagesDir)) {
   fs.cpSync(srcImagesDir, path.join(stagingDir, 'src', 'assets', 'images'), { recursive: true });
 }
 
+// Pre-compile server.ts -> server.mjs so cPanel runs pure Node.js without needing tsx/esbuild at runtime
+await esbuild({
+  entryPoints: [path.join(rootDir, 'server.ts')],
+  bundle: true,
+  platform: 'node',
+  format: 'esm',
+  target: 'node20',
+  packages: 'external',
+  outfile: path.join(stagingDir, 'server.mjs')
+});
+
 const filesToCopy = [
   'server.ts',
   'serverData.ts',
   'types.ts',
+  'app.cjs',
   'app.mjs',
   'package.json',
   '.env.example',
@@ -55,9 +68,10 @@ if (fs.existsSync(lockFile)) {
   fs.copyFileSync(lockFile, path.join(stagingDir, 'package-lock.json'));
 }
 
+// Ship Apache/SSL helper as .htaccess.apache-example so extracting never overwrites cPanel Passenger .htaccess
 const htaccessSrc = path.join(rootDir, 'deploy', '.htaccess');
 if (fs.existsSync(htaccessSrc)) {
-  fs.copyFileSync(htaccessSrc, path.join(stagingDir, '.htaccess'));
+  fs.copyFileSync(htaccessSrc, path.join(stagingDir, '.htaccess.apache-example'));
 }
 
 // Create UsDigital-BMO-CPANEL-PRODUCTION.zip using python3 zipfile (portable across Linux/macOS/CI)

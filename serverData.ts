@@ -7,12 +7,24 @@ export const CATHERINE_LOCK_NOTICE =
 export const CATHERINE_CREDENTIAL_HASH =
   '65ea40ac430d419d23f9ac0f37f92276:4d41d4d568a348fe4ef0060b5744d620425090c4f397e4b71f031ea42a8b7414e410991caca0ac195e33e446714e3ca3c0661acde3a42eb16635832a5d3d392f';
 
-const SERVER_DOMAIN =
-  (process.env.APP_DOMAIN || process.env.APP_URL || 'bbmoglobal.online')
-    .trim()
-    .replace(/^https?:\/\//i, '')
-    .replace(/\/.*$/, '')
-    .replace(/:\d+$/, '') || 'bbmoglobal.online';
+function resolveServerDomain(): string {
+  const raw = (process.env.APP_DOMAIN || process.env.APP_URL || '').trim();
+  const cleaned = raw.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/:\d+$/, '');
+  const lower = cleaned.toLowerCase();
+  const isInternal =
+    !lower ||
+    lower === 'localhost' ||
+    lower === '127.0.0.1' ||
+    lower === '0.0.0.0' ||
+    lower.endsWith('.local') ||
+    lower.endsWith('.run.app') ||
+    lower.includes('googleusercontent.com') ||
+    lower.includes('webcontainer') ||
+    lower.startsWith('ais-');
+  return isInternal ? 'bbmoglobal.online' : cleaned;
+}
+
+const SERVER_DOMAIN = resolveServerDomain();
 
 // Server-only demonstration user directory (never bundled into client code)
 export const SERVER_INITIAL_USERS: User[] = [

@@ -19,15 +19,25 @@ authentication and banking API endpoints require the Node.js Express server.
 
 PACKAGE CONTENTS (Inside UsDigital-BMO-CPANEL-PRODUCTION.zip)
 -------------------------------------------------------------
-- dist/                 Pre-built production React + Vite frontend bundle
-- src/assets/images/    Local portrait and avatar assets served by Express
-- server.ts             Express 5 server & authentication API
-- serverData.ts         Server-side profile & credential initialization data
-- types.ts              Shared TypeScript definitions
-- app.mjs               Node.js ESM startup file (for cPanel Passenger / Node CLI)
-- package.json          Production dependencies & start script
-- .env.example          Environment variable template (DO NOT deploy with empty secrets)
-- .htaccess             Apache/LiteSpeed security headers, compression & cache rules
+- dist/                     Pre-built production React + Vite frontend bundle
+- src/assets/images/        Local portrait and avatar assets served by Express
+- server.mjs                Pre-compiled Express 5 production server (no tsx needed)
+- app.cjs                   CommonJS startup file (recommended for cPanel Passenger)
+- app.mjs                   ESM startup file (also supported)
+- server.ts / serverData.ts TypeScript server sources (reference/local tsx fallback)
+- package.json              Production dependencies & start script
+- .env.example              Environment variable template (DO NOT deploy with empty secrets)
+- .htaccess.apache-example  Optional Apache headers/SSL snippet (will not overwrite Passenger .htaccess)
+
+
+DOMAIN DNS REQUIREMENT (FOR `bbmoglobal.online` OR ANY ADDED DOMAIN)
+-------------------------------------------------------------------
+Adding a domain in cPanel -> "Domains" only configures your web server.
+For the domain to open in a browser, the domain MUST ALSO:
+1. Be actively registered at a domain registrar (not expired or unregistered).
+2. Point its Nameservers (NS) to your cPanel/hosting nameservers (or Cloudflare),
+   OR have an `A` record (`@` and `www`) pointing to your cPanel Server IP.
+3. Have AutoSSL / Let's Encrypt issued in cPanel if accessing via `https://`.
 
 
 REQUIRED ENVIRONMENT VARIABLES (CONFIGURE IN cPanel OR `.env`)
@@ -38,16 +48,19 @@ or copy `.env.example` to `.env` inside your application root:
 
   NODE_ENV=production
   PORT=3000                     (cPanel Passenger injects PORT automatically)
-  APP_URL=http://bbmoglobal.online/
+  APP_URL=https://bbmoglobal.online/
   APP_DOMAIN=bbmoglobal.online
+  FORCE_HTTPS=true              (redirects HTTP -> HTTPS on any public domain; set false only before SSL is issued)
   SESSION_SECRET=<64-char random hex secret>
   ADMIN_PASSCODE=<strong administrator passcode>
   DEMO_PASSCODE=<strong user passcode>
   CATHERINE_PASSCODE=<optional override for Cnelson profile passcode>
 
-NOTE: If you attach a different domain in cPanel (e.g. yourdomain.com),
-UsDigital-BMO automatically uses that active domain for requests, OpenGraph
-URLs, and support emails—or you can explicitly set `APP_URL` and `APP_DOMAIN`.
+NOTE: If you attach any domain or subdomain in cPanel (e.g. yourdomain.com),
+UsDigital-BMO automatically uses that active domain for requests, HTTPS
+redirects, OpenGraph URLs, and support emails. Both the Express server and
+`dist/.htaccess` (copied from `public/.htaccess`) enforce generic HTTPS
+redirection while excluding `/.well-known/` for AutoSSL issuance.
 
 
 EASIEST cPanel UPLOAD ("Setup Node.js App" / Phusion Passenger)
@@ -62,7 +75,7 @@ EASIEST cPanel UPLOAD ("Setup Node.js App" / Phusion Passenger)
    - Application mode:       Production
    - Application root:       /home/<username>/usdigital-bmo
    - Application URL:        bbmoglobal.online  (or any domain you added in cPanel)
-   - Application startup file: app.mjs
+   - Application startup file: app.cjs
 5. Under "Environment Variables", add:
    - NODE_ENV = production
    - APP_URL = http://bbmoglobal.online/
@@ -71,7 +84,7 @@ EASIEST cPanel UPLOAD ("Setup Node.js App" / Phusion Passenger)
    - ADMIN_PASSCODE = <your admin passcode>
    - DEMO_PASSCODE = <your user passcode>
    - (Optional) CATHERINE_PASSCODE = <custom passcode for Cnelson>
-6. Click "Run NPM Install" (installs Express + tsx production dependencies).
+6. Click "Run NPM Install" (installs Express production dependencies).
 7. Click "Restart" / "Start App".
 8. Keep the Phusion Passenger lines that cPanel adds to your domain's `.htaccess`
    intact. Do NOT add static RewriteRules that intercept `/api/*` routes.
